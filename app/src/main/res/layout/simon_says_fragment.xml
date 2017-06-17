@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.altice.eteco.course.basic.simonSays.SimonSaysActivity">
+    tools:context="com.altice.eteco.course.basic.simonSays.SimonSaysFragment">
 
 </android.support.constraint.ConstraintLayout>
