@@ -2,8 +2,23 @@
     <string name="app_name">prj-basic-course</string>
     <string name="title_activity_main2">Main2Activity</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav.drawer.open">Open navigation drawer</string>
+    <string name="nav.drawer.close">Close navigation drawer</string>
+    <string name="nav.drawer.title">Altice Eteco, Basic course</string>
+    <string name="nav.drawer.author">Fausto Bencosme</string>
+
+    <string name="nav.menu.rpn">RPN Calculator</string>
+    <string name="nav.menu.exchange">Exchange Calculator</string>
+    <string name="nav.menu.loan">Loan Calculator</string>
+    <string name="nav.menu.age">Age Calculator</string>
+    <string name="nav.menu.time">Time Calculator</string>
+    <string name="nav.menu.weight">Weight Calculator</string>
+    <string name="nav.menu.conn4">Connect 4</string>
+    <string name="nav.menu.ticTacToe">Tic Tac Toe</string>
+    <string name="nav.menu.magic8ball">Magic 8 Ball</string>
+    <string name="nav.menu.simonSays">Simon Says</string>
 
     <string name="action_settings">Settings</string>
+
+
 </resources>

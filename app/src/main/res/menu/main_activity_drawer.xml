@@ -1,38 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="F">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/exchange"
+                    android:icon="@android:drawable/ic_menu_share"
+                    android:title="@string/nav.menu.exchange" />
+
+                <item
+                    android:id="@+id/loan"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.loan" />
+
+                <item
+                    android:id="@+id/age"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.age" />
+
+                <item
+                    android:id="@+id/time"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.time" />
+
+                <item
+                    android:id="@+id/ticTacToe"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.ticTacToe" />
+
+                <item
+                    android:id="@+id/magic8ball"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.magic8ball" />
+
+                <item
+                    android:id="@+id/simonSays"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.simonSays" />
+            </group>
         </menu>
     </item>
 
+    <item android:title="M">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/rpn"
+                    android:icon="@android:drawable/ic_menu_share"
+                    android:title="@string/nav.menu.rpn" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="C">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/weight"
+                    android:icon="@android:drawable/ic_menu_share"
+                    android:title="@string/nav.menu.weight" />
+
+                <item
+                    android:id="@+id/connect4"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.conn4" />
+
+            </group>
+        </menu>
+    </item>
 </menu>

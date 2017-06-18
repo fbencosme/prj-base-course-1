@@ -8,4 +8,9 @@
     tools:context="com.altice.eteco.course.basic.MainActivity"
     tools:showIn="@layout/main_app_bar">
 
+    <FrameLayout
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
+
 </android.support.constraint.ConstraintLayout>
