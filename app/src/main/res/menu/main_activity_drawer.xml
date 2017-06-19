@@ -6,12 +6,12 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/weight"
-                    android:icon="@android:drawable/ic_menu_share"
+                    android:icon="@mipmap/ic_weight"
                     android:title="@string/nav.menu.weight" />
 
                 <item
                     android:id="@+id/connect4"
-                    android:icon="@android:drawable/ic_menu_send"
+                    android:icon="@mipmap/ic_conn4"
                     android:title="@string/nav.menu.conn4" />
 
             </group>
@@ -24,7 +24,7 @@
 
                 <item
                     android:id="@+id/rpn"
-                    android:icon="@android:drawable/ic_menu_share"
+                    android:icon="@mipmap/ic_rpn"
                     android:title="@string/nav.menu.rpn" />
             </group>
         </menu>
@@ -36,17 +36,17 @@
 
                 <item
                     android:id="@+id/exchange"
-                    android:icon="@android:drawable/ic_menu_share"
+                    android:icon="@mipmap/ic_exchange"
                     android:title="@string/nav.menu.exchange" />
 
                 <item
                     android:id="@+id/loan"
-                    android:icon="@android:drawable/ic_menu_send"
+                    android:icon="@mipmap/ic_loan"
                     android:title="@string/nav.menu.loan" />
 
                 <item
                     android:id="@+id/age"
-                    android:icon="@android:drawable/ic_menu_send"
+                    android:icon="@mipmap/ic_age"
                     android:title="@string/nav.menu.age" />
 
                 <item
@@ -61,7 +61,7 @@
 
                 <item
                     android:id="@+id/magic8ball"
-                    android:icon="@android:drawable/ic_menu_send"
+                    android:icon="@mipmap/ic_magic8ball"
                     android:title="@string/nav.menu.magic8ball" />
 
                 <item
