@@ -9,7 +9,7 @@
     tools:showIn="@layout/main_app_bar">
 
     <FrameLayout
-      android:id="@+id/content"
+      android:id="@+id/content_frame"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
 

@@ -1,17 +1,21 @@
 package com.altice.eteco.course.basic
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleActivity
-import android.arch.lifecycle.LifecycleFragment
 import android.os.Bundle
-import android.os.PersistableBundle
-import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle
-import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.RxLifecycle
+import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.trello.rxlifecycle2.components.support.RxFragment
 
-abstract class BaseFragment : LifecycleFragment() {
+abstract class BaseFragment : RxFragment() {
 
-    protected val provider: LifecycleProvider<Lifecycle.Event> by lazy {
-        AndroidLifecycle.createLifecycleProvider(this)
-    }
+    @LayoutRes
+    open val layoutRes: Int = -1
+
+    @StringRes
+    open val titleRes: Int = -1
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater?.inflate(layoutRes, container, false)
 }

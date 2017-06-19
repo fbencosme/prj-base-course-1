@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="C">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/weight"
+                    android:icon="@android:drawable/ic_menu_share"
+                    android:title="@string/nav.menu.weight" />
+
+                <item
+                    android:id="@+id/connect4"
+                    android:icon="@android:drawable/ic_menu_send"
+                    android:title="@string/nav.menu.conn4" />
+
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="M">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/rpn"
+                    android:icon="@android:drawable/ic_menu_share"
+                    android:title="@string/nav.menu.rpn" />
+            </group>
+        </menu>
+    </item>
+
     <item android:title="F">
         <menu>
             <group android:checkableBehavior="single">
@@ -43,32 +72,4 @@
         </menu>
     </item>
 
-    <item android:title="M">
-        <menu>
-            <group android:checkableBehavior="single">
-
-                <item
-                    android:id="@+id/rpn"
-                    android:icon="@android:drawable/ic_menu_share"
-                    android:title="@string/nav.menu.rpn" />
-            </group>
-        </menu>
-    </item>
-
-    <item android:title="C">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/weight"
-                    android:icon="@android:drawable/ic_menu_share"
-                    android:title="@string/nav.menu.weight" />
-
-                <item
-                    android:id="@+id/connect4"
-                    android:icon="@android:drawable/ic_menu_send"
-                    android:title="@string/nav.menu.conn4" />
-
-            </group>
-        </menu>
-    </item>
 </menu>

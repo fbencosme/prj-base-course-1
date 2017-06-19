@@ -27,6 +27,6 @@ object FragmentFactory {
             R.id.rpn        -> RPNFragment()
             R.id.weight     -> WeightFragment()
             R.id.connect4   -> Connect4Fragment()
-            else            -> ExchangeFragment()
+            else            -> WelcomeFragment()
         }
 }

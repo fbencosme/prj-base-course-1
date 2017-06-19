@@ -3,22 +3,20 @@ package com.altice.eteco.course.basic
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import com.altice.eteco.course.basic.base.FragmentFactory
 
 import com.jakewharton.rxbinding2.support.design.widget.itemSelections
+import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 
 import kotlinx.android.synthetic.main.main_app_bar.*
 import kotlinx.android.synthetic.main.main_activity.*
 
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
-
-    val disposables = CompositeDisposable()
+class MainActivity : RxAppCompatActivity() {
 
     var actionBarDrawer: ActionBarDrawerToggle? = null
 
@@ -33,16 +31,18 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawer?.let {
             drawerLayout.addDrawerListener(it)
             it.syncState()
+            drawerLayout.openDrawer(Gravity.START)
         }
 
         navView
             .itemSelections()
-            .debounce (1, TimeUnit.SECONDS)
-            .map { FragmentFactory.create(it.itemId) }
+            .map { it.itemId }
+            .startWith(-1)
+            .throttleFirst (1, TimeUnit.SECONDS)
+            .map (FragmentFactory::create)
             .observeOn(AndroidSchedulers.mainThread())
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
             .subscribe(this::onSelected)
-            .addTo(disposables)
-
     }
 
     override fun onDestroy() {
@@ -59,6 +59,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSelected(f: BaseFragment) {
+        toolbar.title = getString(f.titleRes)
         drawerLayout.closeDrawer(GravityCompat.START)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.content_frame, f)
+            .commitAllowingStateLoss()
+
     }
 }

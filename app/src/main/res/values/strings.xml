@@ -20,5 +20,21 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="exchange.title">Exchange Calculator</string>
+    <string name="exchange.hint">eg: 100</string>
+    <string name="exchange.currency.usd">USD</string>
+    <string name="exchange.currency.dop">DOP</string>
+    <string name="exchange.currency.eur">EUR</string>
+
+    <string name="welcome.title">Altice, Basic Course</string>
+    <string name="rpn.title">RPN Calculator</string>
+    <string name="loan.title">Loan Calculator</string>
+    <string name="age.title">Age Calculator</string>
+    <string name="time.title">Time Calculator</string>
+    <string name="weight.title">Weight Calculator</string>
+    <string name="conn4.title">Connect 4</string>
+    <string name="ticTacToe.title">Tic Tac Toe</string>
+    <string name="magic8ball.title">Magic 8 Ball</string>
+    <string name="simonSays.title">Simon Says</string>
 
 </resources>
