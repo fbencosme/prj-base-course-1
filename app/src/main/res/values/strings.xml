@@ -27,6 +27,8 @@
     <string name="exchange.currency.eur">EUR</string>
 
     <string name="welcome.title">Altice, Basic Course</string>
+    <string name="welcome.message">Welcome to \n\nBasic Android Course \nprojects</string>
+
     <string name="rpn.title">RPN Calculator</string>
     <string name="loan.title">Loan Calculator</string>
     <string name="age.title">Age Calculator</string>
