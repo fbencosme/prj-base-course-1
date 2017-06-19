@@ -1,4 +1,4 @@
-List of projects avaiable to be completed:
+List of projects:
 
 1 - (M) RPN calculator (Reverse Polish Notation):
 
