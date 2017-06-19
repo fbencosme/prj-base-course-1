@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/loan.amount.hint"
+            android:ems="10"
+            android:inputType="numberDecimal"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/loan.rate.hint"
+            android:inputType="numberDecimal" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/date"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/loan.date.hint"
+            android:ems="10"
+            android:inputType="date" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/calc"
+        android:layout_marginTop="40dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="@string/loan.calc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loan"/>
+        android:enabled="false"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        tools:visibility="visible"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <include layout="@layout/loan_details" />
+
 </LinearLayout>

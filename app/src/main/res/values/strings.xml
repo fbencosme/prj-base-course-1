@@ -27,10 +27,23 @@
     <string name="exchange.currency.eur">EUR</string>
 
     <string name="welcome.title">Altice, Basic Course</string>
-    <string name="welcome.message">Welcome to \n\nBasic Android Course \nprojects</string>
+    <string name="welcome.message">Welcome to \n\nBasic Android Course \nprojects.</string>
+
+    <string name="loan.title">Loan Calculator</string>
+    <string name="loan.amount.hint">Amount $</string>
+    <string name="loan.rate.hint">Rate %</string>
+    <string name="loan.date.hint">Date</string>
+    <string name="loan.calc">Calculate</string>
+    <string name="loan.detail.title">Montly Pay: $%1$s</string>
+    <string name="loan.detail.message">You will need to pay $%1$s every month for %2$s month to payoff the debt.</string>
+    <string name="loan.detail.monthly">Monthly Payment</string>
+    <string name="loan.detail.monthly.value">%1$s months</string>
+    <string name="loan.detail.time">Time to Pay Clear</string>
+    <string name="loan.detail.total">Total of  $%1$s Payments</string>
+    <string name="loan.detail.interest">Total Interest</string>
 
     <string name="rpn.title">RPN Calculator</string>
-    <string name="loan.title">Loan Calculator</string>
+
     <string name="age.title">Age Calculator</string>
     <string name="time.title">Time Calculator</string>
     <string name="weight.title">Weight Calculator</string>

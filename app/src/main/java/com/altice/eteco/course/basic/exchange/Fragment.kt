@@ -7,6 +7,7 @@ import android.view.View
 
 import com.altice.eteco.course.basic.BaseFragment
 import com.altice.eteco.course.basic.R
+import com.altice.eteco.course.basic.base.toDouble
 
 import kotlinx.android.synthetic.main.exchange_fragment.*
 
@@ -42,7 +43,7 @@ class ExchangeFragment : BaseFragment() {
             // Money entered
             money
                 .textChanges()
-                .map { "$it".toDoubleOrNull() ?: 0.toDouble() },
+                .map { it.toDouble() },
 
             // Transform
             { currency, money -> CurrencyExchange(currency, money) }

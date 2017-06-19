@@ -48,26 +48,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_gravity="center_vertical" />
 
-    <EditText
-        android:id="@+id/money"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/moneyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/currency"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:textSize="20sp"
-        android:hint="@string/exchange.hint"
-        android:inputType="numberDecimal" />
+        android:layout_marginTop="30dp">
 
+        <EditText
+            android:id="@+id/money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textSize="20sp"
+            android:hint="@string/exchange.hint"
+            android:inputType="numberDecimal" />
+
+    </android.support.design.widget.TextInputLayout>
     <TextView
         android:id="@+id/conversion1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/money"
+        android:layout_below="@+id/moneyLayout"
         android:gravity="right"
         android:textSize="20sp"
         android:layout_marginTop="20dp"
