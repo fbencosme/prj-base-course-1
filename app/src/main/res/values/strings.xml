@@ -39,12 +39,27 @@
     <string name="loan.detail.monthly">Monthly Payment</string>
     <string name="loan.detail.monthly.value">%1$s months</string>
     <string name="loan.detail.time">Time to Pay Clear</string>
-    <string name="loan.detail.total">Total of  $%1$s Payments</string>
+    <string name="loan.detail.total">Total of $%1$s Payments</string>
     <string name="loan.detail.interest">Total Interest</string>
+
+    <string name="age.title">Age Calculator</string>
+    <string name="age.dob.hint">Date of birth</string>
+    <plurals name="age.current">
+      <item quantity="one">You got %1$s year.</item>
+      <item quantity="other">You got %1$s years.</item>
+    </plurals>
+    <plurals name="age.last">
+        <item quantity="one">Last got %1$s year.</item>
+        <item quantity="other">Last got %1$s years.</item>
+    </plurals>
+    <plurals name="age.diff">
+        <item quantity="one">Diff is %1$s year.</item>
+        <item quantity="other">Diff are %1$s years.</item>
+    </plurals>
 
     <string name="rpn.title">RPN Calculator</string>
 
-    <string name="age.title">Age Calculator</string>
+
     <string name="time.title">Time Calculator</string>
     <string name="weight.title">Weight Calculator</string>
     <string name="conn4.title">Connect 4</string>

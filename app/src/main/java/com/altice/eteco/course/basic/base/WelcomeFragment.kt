@@ -15,7 +15,7 @@ class WelcomeFragment : BaseFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(this.context.loadAnimation(R.anim.abc_slide_in_bottom)) {
+        with(context.loadAnimation(R.anim.abc_slide_in_bottom)) {
             duration = 1000
             welcome.startAnimation(this)
         }

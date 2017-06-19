@@ -4,6 +4,10 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun Date.yearsFrom(now: Date = Date()) =
+   Math.abs(year() - now.year())
+
+
 fun Date.year(): Int {
     val cal   = Calendar.getInstance()
     cal.time  = this

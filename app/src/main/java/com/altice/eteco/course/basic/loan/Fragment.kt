@@ -27,14 +27,15 @@ import java.util.*
 
 import io.reactivex.rxkotlin.Observables.combineLatest
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.subjects.Subject
 
 class LoanFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.loan_fragment
     override val titleRes : Int = R.string.loan_title
 
-    var datePicker : DatePickerDialog? = null
-    val dateSelected = PublishSubject.create<Date>()
+    var datePicker  : DatePickerDialog? = null
+    val dateSelected: Subject<Date>     = PublishSubject.create<Date>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +89,7 @@ class LoanFragment : BaseFragment() {
                 }
         ) {
             // Calculate possible loan details.
-            c, l -> LoanCalculator.simpleCalc(l)
+            _, l -> LoanCalculator.simpleCalc(l)
         }
         .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
         .subscribe(this::onDetail)
@@ -110,7 +111,7 @@ class LoanFragment : BaseFragment() {
         calc.isEnabled = true
         progressBar.hide(true)
 
-        with(this.context.loadAnimation(R.anim.abc_popup_enter)) {
+        with(context.loadAnimation(R.anim.abc_popup_enter)) {
             duration = 600
             details.startAnimation(this)
         }
