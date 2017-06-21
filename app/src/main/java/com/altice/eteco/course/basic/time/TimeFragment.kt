@@ -8,9 +8,7 @@ import android.view.View
 
 import com.altice.eteco.course.basic.BaseFragment
 import com.altice.eteco.course.basic.R
-import com.altice.eteco.course.basic.base.formatMedium
-import com.altice.eteco.course.basic.base.split
-import com.altice.eteco.course.basic.base.toDate
+import com.altice.eteco.course.basic.base.*
 
 import com.jakewharton.rxbinding2.view.clicks
 
@@ -98,10 +96,10 @@ class TimeFragment : BaseFragment() {
             // Calc period of time stream.
             combineLatest(
                 fromDate.skip(1).doOnNext {
-                    from.setText(it.formatMedium())
+                    from.setText(it.formatCustom())
                 },
                 toDate.skip(1).doOnNext {
-                    to.setText(it.formatMedium())
+                    to.setText(it.formatCustom())
                 },
                 { from, to -> Pair(from, to) })
             .map { it.period(context) }

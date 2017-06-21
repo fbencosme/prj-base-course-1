@@ -40,6 +40,9 @@ fun Date.split(): Triple<Int, Int, Int> {
 fun Date.formatMedium() : String =
     DateFormat.getDateInstance(SimpleDateFormat.MEDIUM).format(this)
 
+fun Date.formatCustom(format: String = "EEE, d MMM yyyy hh:mm:ss aaa") : String =
+    SimpleDateFormat(format).format(this)
+
 fun Triple<Int, Int, Int>.toDate() : Date {
     val cal   = Calendar.getInstance()
     cal.set(first, second, third, 0, 0);
