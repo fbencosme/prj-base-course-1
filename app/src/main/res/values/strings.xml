@@ -57,10 +57,13 @@
         <item quantity="other">Diff are %1$s years.</item>
     </plurals>
 
+    <string name="time.title">Time Calculator</string>
+    <string name="time.to">To</string>
+    <string name="time.from">From</string>
+    <string name="time.diff">Diff is %1$s.</string>
+
     <string name="rpn.title">RPN Calculator</string>
 
-
-    <string name="time.title">Time Calculator</string>
     <string name="weight.title">Weight Calculator</string>
     <string name="conn4.title">Connect 4</string>
     <string name="ticTacToe.title">Tic Tac Toe</string>

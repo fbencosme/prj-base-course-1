@@ -38,8 +38,12 @@ class MainActivity : RxAppCompatActivity() {
             .itemSelections()
             .map { it.itemId }
             .startWith(-1)
+            .doOnNext {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
             .throttleFirst (1, TimeUnit.SECONDS)
             .map (FragmentFactory::create)
+            .delay(600, TimeUnit.MICROSECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .compose(bindUntilEvent(ActivityEvent.DESTROY))
             .subscribe(this::onSelected)
@@ -60,7 +64,6 @@ class MainActivity : RxAppCompatActivity() {
 
     fun onSelected(f: BaseFragment) {
         toolbar.title = getString(f.titleRes)
-        drawerLayout.closeDrawer(GravityCompat.START)
 
         supportFragmentManager
             .beginTransaction()
