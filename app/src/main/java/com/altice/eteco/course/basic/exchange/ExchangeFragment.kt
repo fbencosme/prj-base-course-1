@@ -9,8 +9,6 @@ import com.altice.eteco.course.basic.BaseFragment
 import com.altice.eteco.course.basic.R
 import com.altice.eteco.course.basic.base.toDouble
 
-import kotlinx.android.synthetic.main.exchange_fragment.*
-
 import com.jakewharton.rxbinding2.widget.checkedChanges
 import com.jakewharton.rxbinding2.widget.textChanges
 
@@ -22,6 +20,8 @@ import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.Observable.merge
 import io.reactivex.rxkotlin.Observables.combineLatest
 import io.reactivex.rxkotlin.withLatestFrom
+
+import kotlinx.android.synthetic.main.exchange_fragment.*
 
 class ExchangeFragment : BaseFragment() {
 

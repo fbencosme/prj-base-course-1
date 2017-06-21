@@ -64,7 +64,7 @@ class AgeFragment : BaseFragment() {
 
         currDOB
             .doOnNext {
-                dob.setText(it.medium())
+                dob.setText(it.formatMedium())
             }
             .withLatestFrom(lastDOB.startWith(now)) {
                 curr, last  -> Triple(curr, last, last == now)

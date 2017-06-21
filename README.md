@@ -22,10 +22,12 @@ Given a person age, base on a date. Compare the difference between ages.
 
 5 - (F) Times calculator:
 
-Mostrar el tiempo que ha pasado basado entre dos fechas en formato humano Ej “1 año, 2 días, 3 horas, 20 minutos, 30 segundos.”, También tener la opción para comparar con la fecha del momento y en este caso mostrar “Hace 20 minutos”.
+Mostrar el tiempo que ha pasado basado entre dos fechas en formato humano
+Ej “1 año, 2 días, 3 horas, 20 minutos, 30 segundos.”, 
+También tener la opción para comparar con la fecha del momento y en este caso mostrar “Hace 20 minutos”.
 
 
-6 - (C) TupesoIdeal
+6 - (C) Tu peso ideal
 
 Ver: https://curiosoando.com/como-calcular-mi-peso-ideal
 

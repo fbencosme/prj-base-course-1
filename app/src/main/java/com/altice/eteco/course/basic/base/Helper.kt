@@ -7,7 +7,6 @@ import java.util.*
 fun Date.yearsFrom(now: Date = Date()) =
    Math.abs(year() - now.year())
 
-
 fun Date.year(): Int {
     val cal   = Calendar.getInstance()
     cal.time  = this
@@ -18,12 +17,6 @@ fun Date.month(): Int {
     val cal   = Calendar.getInstance()
     cal.time  = this
     return cal.get(Calendar.MONTH)
-}
-
-fun Date.day(): Int {
-    val cal   = Calendar.getInstance()
-    cal.time  = this
-    return cal.get(Calendar.DAY_OF_MONTH)
 }
 
 fun Date.add(field: Int, n: Int): Date {
@@ -44,7 +37,7 @@ fun Date.split(): Triple<Int, Int, Int> {
     return Triple(year, month, day)
 }
 
-fun Date.medium() : String =
+fun Date.formatMedium() : String =
     DateFormat.getDateInstance(SimpleDateFormat.MEDIUM).format(this)
 
 fun Triple<Int, Int, Int>.toDate() : Date {

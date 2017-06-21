@@ -62,6 +62,19 @@
     <string name="time.from">From</string>
     <string name="time.diff">Diff is %1$s.</string>
 
+    <string name="time.year">\u0020year</string>
+    <string name="time.years">\u0020years</string>
+    <string name="time.month">\u0020month</string>
+    <string name="time.months">\u0020months</string>
+    <string name="time.day">\u0020day</string>
+    <string name="time.days">\u0020days</string>
+    <string name="time.hour">\u0020hour</string>
+    <string name="time.hours">\u0020hours</string>
+    <string name="time.minute">\u0020minute</string>
+    <string name="time.minutes">\u0020minutes</string>
+    <string name="time.second">\u0020second</string>
+    <string name="time.seconds">\u0020seconds</string>
+
     <string name="rpn.title">RPN Calculator</string>
 
     <string name="weight.title">Weight Calculator</string>

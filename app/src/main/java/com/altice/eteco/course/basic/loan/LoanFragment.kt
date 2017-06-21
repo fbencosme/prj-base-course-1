@@ -1,5 +1,7 @@
 package com.altice.eteco.course.basic.loan
 
+import java.util.*
+
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
@@ -18,16 +20,13 @@ import com.pawegio.kandroid.show
 
 import com.trello.rxlifecycle2.android.FragmentEvent
 
+import io.reactivex.subjects.Subject
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxkotlin.Observables.combineLatest
+import io.reactivex.rxkotlin.withLatestFrom
 
 import kotlinx.android.synthetic.main.loan_fragment.*
 import kotlinx.android.synthetic.main.loan_details.*
-
-import java.util.*
-
-import io.reactivex.rxkotlin.Observables.combineLatest
-import io.reactivex.rxkotlin.withLatestFrom
-import io.reactivex.subjects.Subject
 
 class LoanFragment : BaseFragment() {
 
@@ -80,7 +79,7 @@ class LoanFragment : BaseFragment() {
                     rate  .textChanges().map { it.toDouble() },
                     dateSelected
                         .doOnNext {
-                            date.setText(it.medium())
+                            date.setText(it.formatMedium())
                         })
                 // Transform form data.
                 { amount, rate, date -> Loan(amount, rate, date) }
