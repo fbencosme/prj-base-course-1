@@ -48,9 +48,9 @@ object Converter {
         if (ce.money <= 0)
             return  Pair("", "")
 
-        val rates = rates.filter { it.from == ce.currency }
-        var fst = rates[0]
-        var snd = rates[1]
+        val rs  = rates.filter { it.from == ce.currency }
+        var fst = rs[0]
+        var snd = rs[1]
 
         fun format(c: CurrencyExchange, r: Rate) =
             "${formatter.format(c.money * r.value)} <b>${r.to}</b>"

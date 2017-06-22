@@ -53,8 +53,8 @@ fun Pair<Date, Date>.period(ctx: Context) : String {
 
         .toFormatter()
 
-    val f = if (from < to) DateTime(from) else DateTime(to)
-    val t = if (from < to) DateTime(to)   else DateTime(from)
+    val start = if (from < to) DateTime(from) else DateTime(to)
+    val end   = if (from < to) DateTime(to)   else DateTime(from)
 
-    return Period(f, t).toString(formatter)
+    return Period(start, end).toString(formatter)
 }

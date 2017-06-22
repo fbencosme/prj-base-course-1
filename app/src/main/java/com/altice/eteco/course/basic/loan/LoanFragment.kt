@@ -42,7 +42,7 @@ class LoanFragment : BaseFragment() {
         val (y, m, d) = Date().split()
 
         datePicker  =  DatePickerDialog(context, {
-            v, y, m, d ->
+            _, y, m, d ->
                 dateSelected.onNext(Triple(y, m, d).toDate())
         }, y, m, d)
 

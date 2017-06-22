@@ -1,9 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="TTT"/>
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:id="@+id/board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/gridContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ticTacToe.board.noughts"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/noughts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="40dp"
+            android:textSize="40sp"
+            android:textStyle="italic"
+            tools:text="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ticTacToe.board.crosses"
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/crosses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textSize="40sp"
+            android:textStyle="italic"
+            tools:text="0" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/gridContainer"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimary">
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/grid"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            grid:alignmentMode="alignBounds"
+            grid:columnCount="3"
+            grid:rowCount="3">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="0,0" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="0,1" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="0,2" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="1,0" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="1,1" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="1,2" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="2,0" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="2,1" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                grid:layout_columnWeight="1"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_rowWeight="1"
+                tools:background="@android:color/background_light"
+                tools:text="2,2" />
+
+        </android.support.v7.widget.GridLayout>
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ticTacToe.reset" />
+
+</RelativeLayout>

@@ -39,7 +39,7 @@ class AgeFragment : BaseFragment() {
         val (y, m, d) = now.split()
 
         datePicker  =  DatePickerDialog(context, {
-            v, y, m, d ->
+            _, y, m, d ->
             currDOB.onNext(Triple(y, m, d).toDate())
         }, y, m, d)
 
