@@ -1,7 +1,5 @@
 package com.altice.eteco.course.basic.ticTacToe
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -10,21 +8,23 @@ import android.widget.TextView
 
 import com.altice.eteco.course.basic.BaseFragment
 import com.altice.eteco.course.basic.R
+
 import com.jakewharton.rxbinding2.view.clicks
+
 import com.pawegio.kandroid.alert
-import com.pawegio.kandroid.longToast
+import com.pawegio.kandroid.loadAnimation
+
 import com.trello.rxlifecycle2.android.FragmentEvent
-import io.reactivex.Observable
+
 import io.reactivex.Observable.merge
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.merge
 import io.reactivex.subjects.PublishSubject
-import  io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.rxkotlin.withLatestFrom
 
 import kotlinx.android.synthetic.main.tic_tac_toe_fragment.*
-import java.util.concurrent.TimeUnit
 
+import java.util.concurrent.TimeUnit
 
 class TicTacToeFragment : BaseFragment() {
 
@@ -33,6 +33,8 @@ class TicTacToeFragment : BaseFragment() {
 
     var gridBtns = listOf<Pair<Int, TextView>>()
     val moves    = PublishSubject.create<List<Move>>()
+    val pc       = PublishSubject.create<Unit>()
+    val counter  = PublishSubject.create<Symbol>()
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,85 +43,141 @@ class TicTacToeFragment : BaseFragment() {
             Pair(it, grid.getChildAt(it) as TextView)
         }
 
-        // Configure button background.
+        // Configure buttons background.
         val bg   = windowBackgroundColor()
         gridBtns.forEach {
             (_, tv) -> tv.setBackgroundColor(bg)
         }
 
         // Reset Game.
-        reset
-            .clicks()
-            .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-            .subscribe { doReset() }
+        var restart = reset.clicks()
+             .map {
+                 _ -> { doReset()  }
+             }
 
         // Game stream flow.
-        gridBtns.map {
+        var player = gridBtns.map {
             (position, tv) ->
                 tv.clicks().map { Pair(position, tv) }
         }
         .merge()
-        .throttleFirst(600, TimeUnit.MILLISECONDS)
-        .withLatestFrom(moves.startWith(emptyList<Move>())) {
-             (position, tv), moves -> Triple(position, tv, moves)
+        .throttleFirst(400, TimeUnit.MILLISECONDS)
+        .map {
+            (tv, p) -> Triple(Player.P1, tv, p)
+        }
+
+        // Marker.
+        val pcPlayer =
+            pc.withLatestFrom(moves) { _, ms -> ms}
+              .filter { it.size < 8 }
+              .map {
+                  val p  = TicTacToe.nextRandomPCMove(it)
+                  val (_, tv) = gridBtns[p]
+                  Triple(Player.PC, p, tv)
+              }
+              .delay(250, TimeUnit.MILLISECONDS)
+
+        val marker = merge(player, pcPlayer)
+            .withLatestFrom(moves.startWith(emptyList<Move>())) {
+                (player, position, tv), moves -> Gamble(player, position, tv, moves)
          }
         .filter {
-            (position, tv, moves) -> !moves.any { it.position == position }
+            g -> !g.moves.any { it.position == g.position }
         }
-        .map(TicTacToe::nextMove)
+        .map {
+            Pair(it.player, TicTacToe.nextMove(it))
+        }
         .doOnNext {
-            (ms, m, _) ->
-                moves.onNext(ms + m)
+            (p, m) ->
+                var ms = m.first + m.second
+                moves.onNext(ms)
         }
-        .observeOn(AndroidSchedulers.mainThread())
-        .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-        .subscribe {
-            (_, m, tv) ->
-
-              when(m.symbol) {
-                  Symbol.Cross  -> tv.text = "X"
-                  Symbol.Nought -> tv.text = "O"
-              }
+        .doOnNext {
+            if (it.first == Player.P1)
+                pc.onNext(Unit.apply {  })
+        }
+        .map {
+            (ms, m) -> { ->
+                when (m.second.symbol) {
+                    Symbol.Cross  -> m.third.text = "X"
+                    Symbol.Nought -> m.third.text = "O"
+                }
+            }
         }
 
         // Check Game winner
-        moves
+        val winner = moves
             .filter { it.any() }
             .map(TicTacToe::checkMove)
-            .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-            .subscribe {
-                (s, poss, moves) ->
-                when(s) {
-                    MoveState.Next -> {}
-
-                    MoveState.Tie  -> {
-                        context.alert {
-                            title("Tie")
-                            onCancel { doReset()  }
-                        }
-                     //   doReset()
-                    }
-
-                    MoveState.Winner  -> {
-                        context.alert("Win").show()
-                        markWinner(poss, moves.last())
-                    }
-                }
+            .map {
+                (s, winner, moves) -> { ->
+                checkMove(s, winner, moves)
+              }
             }
+
+        val scoreboard = merge(
+            counter
+                .filter { it == Symbol.Cross }
+                .scan (0) { x, _ -> x + 1 }
+                .map {
+                    n -> { ->
+                        crosses.text =  "$n"
+                    }
+                },
+            counter
+                .filter { it == Symbol.Nought }
+                .scan (0) { x, y -> x + 1 }
+                .map {
+                    n -> { ->
+                        noughts.text =  "$n"
+                    }
+                })
+
+         // Game flow.
+         merge(restart, marker, winner, scoreboard)
+             .observeOn(AndroidSchedulers.mainThread())
+             .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+             .subscribe { it.invoke() }
     }
 
-    fun markWinner(poss: Array<Int>, move: Move) {
+    fun checkMove(s: MoveState, winner: Array<Int>, moves: List<Move>) {
+        when (s) {
+            MoveState.Next   -> onNext()
+            MoveState.Tie    -> onTie()
+            MoveState.Winner -> onWin(winner, moves.last())
+        }
+    }
+
+    fun onTie() =
+        onAlert(getString(R.string.ticTacToe_tie))
+
+    fun onAlert(msg: String) =
+        context.alert {
+            title(msg)
+            onCancel {
+                doReset()
+            }
+        }.show()
+
+    fun onWin(poss: Array<Int>, move: Move) {
         val colorRes = if (move.symbol == Symbol.Nought) R.color.colorAccent else R.color.colorPrimary
-        var color    = ContextCompat.getColor(context, colorRes)
+        val color    = ContextCompat.getColor(context, colorRes)
+        val wins     = gridBtns.filter  { (p, _ )  -> poss.contains(p) }
 
-        gridBtns
-            .filter  { (p, _ )  -> poss.contains(p) }
-            .forEach { (_, tv) ->
-                tv.setTextColor(color)
-                tv.setTypeface(tv.typeface, Typeface.BOLD_ITALIC)
-                //tv.alpha = .5f
-            }
+         wins.forEach { (_, tv) ->
+            tv.setTextColor(color)
+            tv.setTypeface(tv.typeface, Typeface.BOLD_ITALIC)
+         }
+
+        wins.firstOrNull { (_, tv) -> tv.text.isNotEmpty() }
+           ?.let  {
+               onAlert(getString(R.string.ticTacToe_win, it.second.text))
+        }
+
+        counter.onNext(move.symbol)
     }
+
+    fun onNext() {}
 
     fun doReset() {
         val c = ContextCompat.getColor(context, android.R.color.black)
@@ -129,9 +187,14 @@ class TicTacToeFragment : BaseFragment() {
         gridBtns.forEach {
             (_, tv) ->
                 tv.text = ""
-                tv.setTypeface(tv.typeface, Typeface.NORMAL)
+                tv.setTypeface(null, Typeface.NORMAL)
                 //tv.alpha = 1f
                 tv.setTextColor(c)
+        }
+
+        with(context.loadAnimation(R.anim.abc_grow_fade_in_from_bottom)) {
+            duration = 600
+            grid.startAnimation(this)
         }
     }
 

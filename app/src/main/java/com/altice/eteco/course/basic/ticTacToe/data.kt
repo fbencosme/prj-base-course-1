@@ -2,6 +2,16 @@ package com.altice.eteco.course.basic.ticTacToe
 
 import android.widget.TextView
 
+data class Gamble(
+    val player  : Player,
+    val position: Int,
+    var textView: TextView,
+    val moves   : List<Move>
+)
+enum class Player {
+    P1, P2, PC
+}
+
 enum class Symbol {
     Cross, Nought
 }
@@ -40,13 +50,21 @@ object TicTacToe {
         return Triple(MoveState.Next, emptyArray(), moves)
     }
 
-    fun nextMove(t: Triple<Int, TextView, List<Move>>) : Triple<List<Move>, Move, TextView> {
-        val (position, tv, moves) = t
-        val last = moves.lastOrNull()
+    fun nextRandomPCMove(moves: List<Move>) : Int {
+        val ps  = 0 .. 8
+        val ms  = ps.subtract(moves.map { it.position }).toList()
+        val idx = (Math.random() * ms.size).toInt()
+        val mv  = ms[idx]
+        return mv
+    }
+
+    fun nextMove(g: Gamble) : Triple<List<Move>, Move, TextView> {
+
+        val last = g.moves.lastOrNull()
         if (last == null)
-            return Triple(moves, Move(Symbol.Cross, position), tv)
+            return Triple(g.moves, Move(Symbol.Cross, g.position), g.textView)
         else
-            return Triple(moves, Move(last.symbol.opposite(), position), tv)
+            return Triple(g.moves, Move(last.symbol.opposite(), g.position), g.textView)
     }
 
     val wins = arrayOf(
