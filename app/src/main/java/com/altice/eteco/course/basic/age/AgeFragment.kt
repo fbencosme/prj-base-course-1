@@ -32,32 +32,16 @@ class AgeFragment : BaseFragment() {
     val currDOB    : Subject<Date> = PublishSubject.create<Date>()
     val lastDOB    : Subject<Date> = PublishSubject.create<Date>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val now       = Date()
-        val (y, m, d) = now.split()
-
-        datePicker  =  DatePickerDialog(context, {
-            _, y, m, d ->
-            currDOB.onNext(Triple(y, m, d).toDate())
-        }, y, m, d)
-
-        datePicker?.let {
-            it.datePicker.maxDate = now.time
-        }
-    }
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val x = dateTimeSheet
+        val sheet = dateTimeSheet as DateTimeBottomSheetDialogFragment
 
         // Open date picker on click event.
         dob.clicks()
             .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
             .subscribe {
-                datePicker?.let {
-                    if (!it.isShowing) it.show()
-                }
+                sheet.open(childFragmentManager)
             }
 
         val now = Date()
