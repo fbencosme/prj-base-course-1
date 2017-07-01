@@ -14,7 +14,6 @@
         android:id="@+id/board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/gridContainer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp"
         android:orientation="horizontal">
@@ -35,7 +34,7 @@
             android:paddingRight="40dp"
             android:textSize="40sp"
             android:textStyle="italic"
-            tools:text="2" />
+            android:text="-" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,9 +51,9 @@
             android:paddingLeft="10dp"
             android:textSize="40sp"
             android:textStyle="italic"
-            tools:text="0" />
+            android:text="-" />
     </LinearLayout>
-
+    
     <android.support.v7.widget.GridLayout
         android:background="@color/colorPrimary.op.80"
         android:id="@+id/grid"
@@ -74,10 +73,11 @@
             android:layout_marginRight="4dp"
             android:layout_marginTop="0dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="0,0" />
 
@@ -87,10 +87,11 @@
             android:layout_marginBottom="4dp"
             android:layout_marginRight="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="0,1" />
 
@@ -99,10 +100,11 @@
             android:layout_height="30dp"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="0,2" />
 
@@ -111,10 +113,11 @@
             android:layout_height="30dp"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="1,0" />
 
@@ -124,10 +127,11 @@
             android:layout_marginBottom="4dp"
             android:layout_marginRight="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="1,1" />
 
@@ -136,10 +140,11 @@
             android:layout_height="30dp"
             android:layout_marginBottom="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="1,2" />
 
@@ -148,10 +153,11 @@
             android:layout_height="30dp"
             android:layout_marginRight="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="2,0" />
 
@@ -160,10 +166,11 @@
             android:layout_height="30dp"
             android:layout_marginRight="4dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="2,1" />
 
@@ -171,10 +178,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             grid:layout_columnWeight="1"
             grid:layout_gravity="fill_horizontal"
             grid:layout_rowWeight="1"
+            android:textColor="@android:color/black"
             tools:background="@android:color/background_light"
             tools:text="2,2" />
 
@@ -183,11 +191,12 @@
 
     <Button
         android:id="@+id/reset"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
         android:text="@string/ticTacToe.reset" />
 
 </RelativeLayout>
