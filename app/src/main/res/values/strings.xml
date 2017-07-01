@@ -90,5 +90,6 @@
 
     <string name="simonSays.title">Simon Says</string>
 
+    <string name="datetime.save">Save</string>
 
 </resources>
