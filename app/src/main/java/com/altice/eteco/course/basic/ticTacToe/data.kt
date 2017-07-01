@@ -13,7 +13,7 @@ enum class Player {
 }
 
 enum class Symbol {
-    Cross, Nought
+    Cross, Nought, None
 }
 
 data class Move(
@@ -84,4 +84,5 @@ fun Symbol.opposite() =
     when(this) {
         Symbol.Cross  -> Symbol.Nought
         Symbol.Nought -> Symbol.Cross
+        Symbol.None   -> Symbol.None
     }

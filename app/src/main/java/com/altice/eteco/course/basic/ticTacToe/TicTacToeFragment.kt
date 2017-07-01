@@ -107,7 +107,7 @@ class TicTacToeFragment : BaseFragment() {
 
         // Check Game winner
         val winner = moves
-            .filter { it.any() }
+            .filter { it.any { it.symbol != Symbol.None } }
             .map(TicTacToe::checkMove)
             .map {
                 (s, winner, moves) -> { ->
@@ -160,6 +160,10 @@ class TicTacToeFragment : BaseFragment() {
         }.show()
 
     fun onWin(poss: Array<Int>, move: Move) {
+
+        // Fill moves
+        moves.onNext((0..8).map { Move(Symbol.None, it) })
+
         val colorRes = if (move.symbol == Symbol.Nought) R.color.colorAccent else R.color.colorPrimary
         val color    = ContextCompat.getColor(context, colorRes)
         val wins     = gridBtns.filter  { (p, _ )  -> poss.contains(p) }
@@ -192,7 +196,7 @@ class TicTacToeFragment : BaseFragment() {
                 tv.setTextColor(c)
         }
 
-        with(context.loadAnimation(R.anim.abc_grow_fade_in_from_bottom)) {
+        with(context.loadAnimation(R.anim.abc_popup_enter)) {
             duration = 600
             grid.startAnimation(this)
         }
