@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.merge
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.subjects.Subject
 
 import kotlinx.android.synthetic.main.tic_tac_toe_fragment.*
 
@@ -31,37 +32,41 @@ class TicTacToeFragment : BaseFragment() {
     override val layoutRes: Int = R.layout.tic_tac_toe_fragment
     override val titleRes : Int = R.string.ticTacToe_title
 
-    var gridBtns = listOf<Pair<Int, TextView>>()
-    val moves    = PublishSubject.create<List<Move>>()
-    val pc       = PublishSubject.create<Unit>()
-    val counter  = PublishSubject.create<Symbol>()
+    var buttons : List<Pair<Int, TextView>>      = listOf()
+    val moves   : Subject<List<Move>>            = PublishSubject.create<List<Move>>()
+    val pc      : Subject<Unit>                  = PublishSubject.create<Unit>()
+    val counter : Subject<Pair<Boolean, Symbol>> = PublishSubject.create<Pair<Boolean, Symbol>>()
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gridBtns = (0 .. grid.childCount - 1).map {
+        buttons = (0 .. grid.childCount - 1).map {
             Pair(it, grid.getChildAt(it) as TextView)
         }
 
         // Configure buttons background.
         val bg   = windowBackgroundColor()
-        gridBtns.forEach {
+        buttons.forEach {
             (_, tv) -> tv.setBackgroundColor(bg)
         }
 
         // Reset Game.
         var restart = reset.clicks()
              .map {
-                 _ -> { doReset()  }
+                 _ -> {
+                 doReset()
+                 counter.onNext(Pair(true, Symbol.Nought))
+                 counter.onNext(Pair(true, Symbol.Cross ))
+                }
              }
 
         // Game stream flow.
-        var player = gridBtns.map {
+        var player = buttons.map {
             (position, tv) ->
                 tv.clicks().map { Pair(position, tv) }
         }
         .merge()
-        .throttleFirst(400, TimeUnit.MILLISECONDS)
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
         .map {
             (tv, p) -> Triple(Player.P1, tv, p)
         }
@@ -72,10 +77,10 @@ class TicTacToeFragment : BaseFragment() {
               .filter { it.size < 8 }
               .map {
                   val p  = TicTacToe.nextRandomPCMove(it)
-                  val (_, tv) = gridBtns[p]
+                  val (_, tv) = buttons[p]
                   Triple(Player.PC, p, tv)
               }
-              .delay(250, TimeUnit.MILLISECONDS)
+              .delay(300, TimeUnit.MILLISECONDS)
 
         val marker = merge(player, pcPlayer)
             .withLatestFrom(moves.startWith(emptyList<Move>())) {
@@ -88,7 +93,7 @@ class TicTacToeFragment : BaseFragment() {
             Pair(it.player, TicTacToe.nextMove(it))
         }
         .doOnNext {
-            (p, m) ->
+            (_, m) ->
                 var ms = m.first + m.second
                 moves.onNext(ms)
         }
@@ -97,10 +102,11 @@ class TicTacToeFragment : BaseFragment() {
                 pc.onNext(Unit.apply {  })
         }
         .map {
-            (ms, m) -> { ->
+            (_, m) -> { ->
                 when (m.second.symbol) {
                     Symbol.Cross  -> m.third.text = "X"
                     Symbol.Nought -> m.third.text = "O"
+                    Symbol.None   -> ""
                 }
             }
         }
@@ -111,33 +117,29 @@ class TicTacToeFragment : BaseFragment() {
             .map(TicTacToe::checkMove)
             .map {
                 (s, winner, moves) -> { ->
-                checkMove(s, winner, moves)
-              }
+                    checkMove(s, winner, moves)
+                }
             }
 
         val scoreboard = merge(
-            counter
-                .filter { it == Symbol.Cross }
-                .scan (0) { x, _ -> x + 1 }
-                .map {
-                    n -> { ->
-                        crosses.text =  "$n"
-                    }
-                },
-            counter
-                .filter { it == Symbol.Nought }
-                .scan (0) { x, y -> x + 1 }
-                .map {
-                    n -> { ->
-                        noughts.text =  "$n"
-                    }
-                })
+            mkCounter(crosses, Symbol.Cross),
+            mkCounter(noughts, Symbol.Nought))
 
          // Game flow.
          merge(restart, marker, winner, scoreboard)
              .observeOn(AndroidSchedulers.mainThread())
              .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
              .subscribe { it.invoke() }
+    }
+
+    fun mkCounter(tv: TextView, f: Symbol) =
+        counter
+            .filter { (_ , s) -> s == f }
+            .map {
+                (reset, s) -> { ->
+                val n = if (reset) 0 else "${tv.text}".toIntOrNull() ?: 0 + 1
+                tv.text =  "$n"
+            }
     }
 
     fun checkMove(s: MoveState, winner: Array<Int>, moves: List<Move>) {
@@ -166,7 +168,7 @@ class TicTacToeFragment : BaseFragment() {
 
         val colorRes = if (move.symbol == Symbol.Nought) R.color.colorAccent else R.color.colorPrimary
         val color    = ContextCompat.getColor(context, colorRes)
-        val wins     = gridBtns.filter  { (p, _ )  -> poss.contains(p) }
+        val wins     = buttons.filter  { (p, _ )  -> poss.contains(p) }
 
          wins.forEach { (_, tv) ->
             tv.setTextColor(color)
@@ -178,7 +180,7 @@ class TicTacToeFragment : BaseFragment() {
                onAlert(getString(R.string.ticTacToe_win, it.second.text))
         }
 
-        counter.onNext(move.symbol)
+        counter.onNext(Pair(false, move.symbol))
     }
 
     fun onNext() {}
@@ -188,11 +190,10 @@ class TicTacToeFragment : BaseFragment() {
 
         moves.onNext(emptyList())
 
-        gridBtns.forEach {
+        buttons.forEach {
             (_, tv) ->
                 tv.text = ""
                 tv.setTypeface(null, Typeface.NORMAL)
-                //tv.alpha = 1f
                 tv.setTextColor(c)
         }
 

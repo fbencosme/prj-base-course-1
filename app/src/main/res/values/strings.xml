@@ -80,7 +80,7 @@
     <string name="ticTacToe.board.noughts">O :\u0020</string>
     <string name="ticTacToe.board.crosses">X :\u0020</string>
     <string name="ticTacToe.win">%1$s wins!</string>
-    <string name="ticTacToe.tie">Tie :D !</string>
+    <string name="ticTacToe.tie">Tie!</string>
 
     <string name="rpn.title">RPN Calculator</string>
 
