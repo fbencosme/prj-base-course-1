@@ -5,4 +5,9 @@
     <color name="colorAccent">#F39638</color>
     <color name="white">#FFFFFF</color>
     <color name="colorPrimary.op.80">#CC691F7E</color>
+
+    <color name="green">#09CA55</color>
+    <color name="red">#FF1F17</color>
+    <color name="blue">#0067CE</color>
+    <color name="yellow">#F3C200</color>
 </resources>
