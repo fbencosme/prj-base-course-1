@@ -5,10 +5,354 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.altice.eteco.course.basic.magic8Ball.Magic8BallFragment">
+
     <TextView
-        android:textSize="20sp"
+        android:id="@+id/red"
+        android:text="0"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:background="@drawable/circle_red"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/grid"
+        android:layout_above="@+id/grid"/>
+    <TextView
+        android:id="@+id/blue"
+        android:background="@drawable/circle_yellow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/grid"
+        android:layout_above="@+id/grid"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:text="0"
+        android:textColor="@android:color/black"/>
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_margin="20dp"
+        android:padding="6dp"
         android:layout_centerInParent="true"
-        android:text="Comming soon!"
+        android:background="@color/blue"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:rowCount="6"
+        android:columnCount="7"
+        android:columnWidth="20dp"
+        android:numColumns="4"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center">
+        <!-- 1st Row -->
+        <TextView
+            android:tag="00"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:tag="01"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:tag="02"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:tag="03"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:tag="04"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:tag="05"
+            android:background="@drawable/circle_black"
+            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="06" />
+
+        <!-- 2nd Row -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="10" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="11" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="12" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="13" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="14" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="15" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="16" />
+
+        <!-- 3rd Row -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="20" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="21" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="22" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="23" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="24" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="25" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="26" />
+
+        <!-- 4th Row -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="30" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="31" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="32" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="33" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="34" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="35" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="36" />
+
+        <!-- 5th Row -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="40" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="41" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="42" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="43" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="44" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="45" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="46" />
+
+        <!-- 6th Row -->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="50" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="31" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="52" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="53" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="54" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="55" />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/circle_black"
+            android:tag="56" />
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/onTurn"
+        android:layout_below="@+id/grid"
+        android:background="@drawable/circle_black"
+        android:layout_margin="4dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"/>
+      <TextView
+          android:layout_below="@+id/onTurn"
+          android:text="@string/conn4.turn"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"/>
 </RelativeLayout>

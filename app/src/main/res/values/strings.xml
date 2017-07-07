@@ -82,14 +82,6 @@
     <string name="tic.tac.toe.win">%1$s wins!</string>
     <string name="tic.tac.toe.tie">Tie!</string>
 
-    <string name="rpn.title">RPN Calculator</string>
-
-    <string name="weight.title">Weight Calculator</string>
-
-    <string name="conn4.title">Connect 4</string>
-
-    <string name="magic.8.ball.title">Magic 8 Ball</string>
-
     <string name="simon.says.title">Simon Says</string>
     <string name="simon.says.score">Score</string>
     <string name="simon.says.aww">aww :( ..!</string>
@@ -97,6 +89,14 @@
     <string name="simon.says.focus">Be Focus!</string>
     <string name="simon.says.play">Play!</string>
     <string name="simon.says.excellent">Excellent!</string>
+
+    <string name="conn4.title">Connect 4</string>
+    <string name="conn4.turn">Turn</string>
+
+
+    <string name="rpn.title">RPN Calculator</string>
+    <string name="weight.title">Weight Calculator</string>
+    <string name="magic.8.ball.title">Magic 8 Ball</string>
 
     <string name="datetime.save">Save</string>
 
