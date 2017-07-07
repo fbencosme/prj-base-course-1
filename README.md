@@ -4,6 +4,9 @@ List of projects:
 
 Basic ops: sum, subs, mult & div. Present last five ops.
 
+Source:
+
+https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/magic8Ball
 
 2 - (F) Exchange calculator:
 
