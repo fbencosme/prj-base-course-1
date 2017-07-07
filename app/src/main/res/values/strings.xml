@@ -75,12 +75,12 @@
     <string name="time.second">\u0020second</string>
     <string name="time.seconds">\u0020seconds</string>
 
-    <string name="ticTacToe.title">Tic Tac Toe</string>
-    <string name="ticTacToe.reset">Reset</string>
-    <string name="ticTacToe.board.noughts">O :\u0020</string>
-    <string name="ticTacToe.board.crosses">X :\u0020</string>
-    <string name="ticTacToe.win">%1$s wins!</string>
-    <string name="ticTacToe.tie">Tie!</string>
+    <string name="tic.tac.toe.title">Tic Tac Toe</string>
+    <string name="tic.tac.toe.reset">Reset</string>
+    <string name="tic.tac.toe.board.noughts">O :\u0020</string>
+    <string name="tic.tac.toe.board.crosses">X :\u0020</string>
+    <string name="tic.tac.toe.win">%1$s wins!</string>
+    <string name="tic.tac.toe.tie">Tie!</string>
 
     <string name="rpn.title">RPN Calculator</string>
 
@@ -88,9 +88,15 @@
 
     <string name="conn4.title">Connect 4</string>
 
-    <string name="magic8ball.title">Magic 8 Ball</string>
+    <string name="magic.8.ball.title">Magic 8 Ball</string>
 
-    <string name="simonSays.title">Simon Says</string>
+    <string name="simon.says.title">Simon Says</string>
+    <string name="simon.says.score">Score</string>
+    <string name="simon.says.aww">aww.. :(</string>
+    <string name="simon.says.go">Go!</string>
+    <string name="simon.says.focus">Be Focus!</string>
+    <string name="simon.says.play">Play!</string>
+    <string name="simon.says.excellent">Excellent!</string>
 
     <string name="datetime.save">Save</string>
 

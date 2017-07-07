@@ -5,29 +5,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.altice.eteco.course.basic.simonSays.SimonSaysFragment">
+    tools:context="com.altice.eteco.course.basic.simonSays.SimonSaysFragment" >
 
-    <Button
-        android:id="@+id/green"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <RelativeLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:layout_centerInParent="true">
 
-    <Button
-        android:id="@+id/red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <Button
+            android:id="@+id/green"
+            android:backgroundTint="@color/green"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_toLeftOf="@+id/center"
+            android:layout_above="@+id/center"/>
 
-    <Button
-        android:id="@+id/yellow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <Button
+            android:id="@+id/red"
+            android:backgroundTint="@color/red"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_toRightOf="@+id/center"
+            android:layout_above="@+id/center"  />
 
-    <Button
-        android:id="@+id/blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <RelativeLayout
+            android:background="@drawable/oval"
+            android:id="@+id/center"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true" >
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/yellow"
+            android:backgroundTint="@color/yellow"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_toLeftOf="@+id/center"
+            android:layout_below="@+id/center" />
+
+        <Button
+            android:id="@+id/blue"
+            android:backgroundTint="@color/blue"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_toRightOf="@+id/center"
+            android:layout_below="@+id/center"  />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:background="@drawable/oval"
+        android:layout_centerInParent="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp" >
+
+        <Button
+            android:id="@+id/go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:text="@string/simon.says.go" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:text="00" />
+
+        <TextView
+            android:id="@+id/scoreLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/score"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:text="@string/simon.says.score"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </RelativeLayout>
+
 </RelativeLayout>

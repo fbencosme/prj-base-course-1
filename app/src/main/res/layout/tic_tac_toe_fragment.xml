@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ticTacToe.board.crosses"
+            android:text="@string/tic.tac.toe.board.crosses"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ticTacToe.board.noughts"
+            android:text="@string/tic.tac.toe.board.noughts"
             android:textColor="@color/colorAccent"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -197,6 +197,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:text="@string/ticTacToe.reset" />
+        android:text="@string/tic.tac.toe.reset" />
 
 </RelativeLayout>

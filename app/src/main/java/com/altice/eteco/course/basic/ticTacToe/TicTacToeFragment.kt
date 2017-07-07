@@ -15,6 +15,7 @@ import com.pawegio.kandroid.alert
 import com.pawegio.kandroid.loadAnimation
 
 import com.trello.rxlifecycle2.android.FragmentEvent
+import io.reactivex.Observable
 
 import io.reactivex.Observable.merge
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +31,7 @@ import java.util.concurrent.TimeUnit
 class TicTacToeFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.tic_tac_toe_fragment
-    override val titleRes : Int = R.string.ticTacToe_title
+    override val titleRes : Int = R.string.tic_tac_toe_title
 
     var buttons : List<Pair<Int, TextView>>      = listOf()
     val moves   : Subject<List<Move>>            = PublishSubject.create<List<Move>>()
@@ -132,7 +133,7 @@ class TicTacToeFragment : BaseFragment() {
              .subscribe { it.invoke() }
     }
 
-    fun mkCounter(tv: TextView, f: Symbol) =
+    fun mkCounter(tv: TextView, f: Symbol) : Observable<() -> Unit> =
         counter
             .filter { (_ , s) -> s == f }
             .map {
@@ -151,7 +152,7 @@ class TicTacToeFragment : BaseFragment() {
     }
 
     fun onTie() =
-        onAlert(getString(R.string.ticTacToe_tie))
+        onAlert(getString(R.string.tic_tac_toe_tie))
 
     fun onAlert(msg: String) =
         context.alert {
@@ -177,7 +178,7 @@ class TicTacToeFragment : BaseFragment() {
 
         wins.firstOrNull { (_, tv) -> tv.text.isNotEmpty() }
            ?.let  {
-               onAlert(getString(R.string.ticTacToe_win, it.second.text))
+               onAlert(getString(R.string.tic_tac_toe_win, it.second.text))
         }
 
         counter.onNext(Pair(false, move.symbol))
