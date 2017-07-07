@@ -38,7 +38,6 @@ class SimonSaysFragment : BaseFragment() {
 
     val seq     : Subject<Queue<Item>> = BehaviorSubject.createDefault(LinkedList<Item>())
     val autoPlay: Subject<Boolean>     = PublishSubject.create<Boolean>()
-    val counter : Subject<Int>         = PublishSubject.create<Int>()
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,10 +45,10 @@ class SimonSaysFragment : BaseFragment() {
         val game = Game(listOf(green, red, yellow, blue))
         val bump = PublishSubject.create<Boolean>()
 
-        val scoreCounter = counter.map {
+        val counter = seq.map { it.size }.map { size ->
             { ->
-                val c = "${score.text}".toInt() + 1
-                score.text = c.toString()
+                val c = if (size <= 0) 0 else size - 1
+                score.text = "$c"
             }
         }
 
@@ -61,8 +60,7 @@ class SimonSaysFragment : BaseFragment() {
             .map { (bump, s) -> {
 
                 if (bump) {
-                    counter.onNext(1)
-                    toast(R.string.simon_says_excellent)
+                    longToast(R.string.simon_says_excellent)
                     R.raw.applause.play(context) {
                         seq.onNext(game.increase(s))
                         autoPlay.onNext(true)
@@ -84,7 +82,7 @@ class SimonSaysFragment : BaseFragment() {
             .throttleFirst(300, TimeUnit.MILLISECONDS)
             .map { _ -> { ->
                     longToast(R.string.simon_says_focus)
-                    seq.onNext(game.genSeq(1))
+                    seq.onNext(game.genSeq())
                     autoPlay.onNext(true)
                 }
             }
@@ -95,20 +93,21 @@ class SimonSaysFragment : BaseFragment() {
             red   .clicks().map { game.items[1] },
             yellow.clicks().map { game.items[2] },
             blue  .clicks().map { game.items[3] })
-        .withLatestFrom(
-            autoPlay
-               .filter { !it }
-               .withLatestFrom(seq.map { it.copy() }) { autoPlay, seq ->
-                   Pair(seq, autoPlay)
-               }
-        ) { item, (seq, autoPlay) ->
-            Triple(item, seq, autoPlay)
+        .withLatestFrom(autoPlay) {
+            item, autoPlay -> Pair(item, autoPlay)
         }
-        .filter { (_, _, autoPlay) -> !autoPlay  }
-        .map { (item, seq, autoPlay) ->
-            val poll  = seq.poll()
-            val match = item.button.equals(poll?.button)
-            Triple(match, seq, item)
+        .filter { (_, autoPlay) ->
+            !autoPlay
+        }
+        .map { it.first }
+        .withLatestFrom(seq.map { it.copy() }) {
+            item, seq -> Pair(item, seq)
+        }
+        .map {
+            (item, seq) ->
+                val poll  = seq.poll()
+                val match = item.button.equals(poll?.button)
+                Triple(match, seq, item)
         }
         .map {
             (match, seq, item) -> { ->
@@ -161,7 +160,7 @@ class SimonSaysFragment : BaseFragment() {
 
         // Game flow.
         merge(start, winner, auto, play)
-            .mergeWith(scoreCounter)
+            .mergeWith(counter)
             .observeOn(AndroidSchedulers.mainThread())
             .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
             .subscribe(

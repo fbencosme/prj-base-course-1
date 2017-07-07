@@ -24,7 +24,7 @@ class Game(options: List<Button>) {
         Item(options[3], R.raw.sound4)
     )
 
-    fun genSeq(limit: Int) : Queue<Item> {
+    fun genSeq(limit: Int = 0) : Queue<Item> {
 
         val q = LinkedList<Item>()
 
@@ -38,7 +38,7 @@ class Game(options: List<Button>) {
 
     fun increase(seq: Queue<Item>) : Queue<Item> {
         val idx  = (Math.random() * items.size).toInt()
-        val item = items[idx].copy(index = seq.size - 1)
+        val item = items[idx].copy(index = seq.size)
         seq.add(item)
         return seq
     }
