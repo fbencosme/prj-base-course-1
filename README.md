@@ -1,3 +1,5 @@
+This list of projects are intented to solved using reactive programming :D.
+
 ###### List of project
 
 ### 1 - (M) RPN calculator (Reverse Polish Notation):
