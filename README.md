@@ -63,6 +63,6 @@ Info: https://en.wikipedia.org/wiki/Magic_8-Ball
 
 ### 10 - (F) SimonSays.-1
 
-[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/somonSays)
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/simonSays)
 
 ###### Info: https://en.wikipedia.org/wiki/Simon_(game)
