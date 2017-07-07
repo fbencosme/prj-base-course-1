@@ -1,53 +1,66 @@
 List of projects:
 
-1 - (M) RPN calculator (Reverse Polish Notation):
+## 1 - (M) RPN calculator (Reverse Polish Notation):
 
-Basic ops: sum, subs, mult & div. Present last five ops.
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/rnp)
 
-[Source](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/magic8Ball)
-
-2 - (F) Exchange calculator:
-
-Given a currency (DOP, USD, EUR) exchange a value to the other currencies. (Use fixed rate)
+###### Basic ops: sum, subs, mult & div. Present last five ops.
 
 
-3 - (F) Loan calculator:
+## 2 - (F) Exchange calculator:
 
-Display loan details given an amount of money, rate and date.
+###### Given a currency (DOP, USD, EUR) exchange a value to the other currencies. (Use fixed rate)
 
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/exchange)
 
-4 - (F) Age calculator:
+## 3 - (F) Loan calculator:
 
-Given a person age, base on a date. Compare the difference between ages.
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/loan)
 
-
-5 - (F) Times calculator:
-
-Mostrar el tiempo que ha pasado basado entre dos fechas en formato humano
-Ej “1 año, 2 días, 3 horas, 20 minutos, 30 segundos.”, 
-También tener la opción para comparar con la fecha del momento y en este caso mostrar “Hace 20 minutos”.
+###### Display loan details given an amount of money, rate and date.
 
 
-6 - (C) Tu peso ideal
+## 4 - (F) Age calculator:
 
-Ver: https://curiosoando.com/como-calcular-mi-peso-ideal
+###### Given a person age, base on a date. Compare the difference between ages.
 
-
-7 - (C) Connect4(6x7“HxW”):
-
-Ver: https://en.wikipedia.org/wiki/Connect_Four
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/age)
 
 
-8 - (F) TicTacToe.-1
+## 5 - (F) Times calculator:
 
-Ver: https://en.wikipedia.org/wiki/Tic-tac-toe
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/time)
 
+###### Mostrar el tiempo que ha pasado basado entre dos fechas en formato humano
+###### Ej “1 año, 2 días, 3 horas, 20 minutos, 30 segundos.”, 
+###### También tener la opción para comparar con la fecha del momento y en este caso mostrar “Hace 20 minutos”.
 
-9 - (F) Magic 8-Ball. - 1
+## 6 - (C) Tu peso ideal
 
-Ver: https://en.wikipedia.org/wiki/Magic_8-Ball
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/weight)
 
+###### Info: https://curiosoando.com/como-calcular-mi-peso-ideal
 
-10 - (F) SimonSays.-1
+## 7 - (C) Connect4(6x7“HxW”):
 
-Ver: https://en.wikipedia.org/wiki/Simon_(game)
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/connect4)
+
+###### Ver: https://en.wikipedia.org/wiki/Connect_Four
+
+## 8 - (F) TicTacToe.-1
+
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/ticTactToe)
+
+###### Info: https://en.wikipedia.org/wiki/Tic-tac-toe
+
+## 9 - (F) Magic 8-Ball. - 1
+
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/magic8Ball)
+
+Info: https://en.wikipedia.org/wiki/Magic_8-Ball
+
+## 10 - (F) SimonSays.-1
+
+[Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/somonSays)
+
+###### Info: https://en.wikipedia.org/wiki/Simon_(game)
