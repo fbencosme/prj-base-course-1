@@ -53,7 +53,7 @@
 
 ###### Info: https://en.wikipedia.org/wiki/Tic-tac-toe
 
-### 9 - (F) Magic 8-Ball. - 1
+###### 9 - (F) Magic 8-Ball. - 1
 
 [Code](https://github.com/fbencosme/prj-course-basic/tree/master/app/src/main/java/com/altice/eteco/course/basic/magic8Ball)
 
