@@ -9,25 +9,30 @@
     <TextView
         android:id="@+id/red"
         android:text="0"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:textSize="20sp"
         android:background="@drawable/circle_red"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignStart="@+id/grid"
         android:layout_above="@+id/grid"/>
+    <Button
+        android:id="@+id/reset"
+        android:text="@string/conn4.reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/grid"/>
     <TextView
-        android:id="@+id/blue"
+        android:id="@+id/yellow"
         android:background="@drawable/circle_yellow"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignEnd="@+id/grid"
         android:layout_above="@+id/grid"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:text="0"
-        android:textColor="@android:color/black"/>
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="0"/>
 
     <GridLayout
         android:id="@+id/grid"
@@ -303,7 +308,7 @@
             android:layout_height="40dp"
             android:layout_margin="4dp"
             android:background="@drawable/circle_black"
-            android:tag="31" />
+            android:tag="51" />
 
         <TextView
             android:layout_width="40dp"
@@ -343,16 +348,18 @@
 
     <TextView
         android:id="@+id/onTurn"
-        android:layout_below="@+id/grid"
         android:background="@drawable/circle_black"
         android:layout_margin="4dp"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_above="@+id/turnText"
         android:layout_centerHorizontal="true"/>
       <TextView
-          android:layout_below="@+id/onTurn"
+          android:id="@+id/turnText"
+          android:layout_alignParentBottom="true"
           android:text="@string/conn4.turn"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"/>
+          android:layout_centerHorizontal="true"
+          android:layout_marginBottom="10dp" />
 </RelativeLayout>
