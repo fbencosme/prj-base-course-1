@@ -32,29 +32,45 @@ class AgeFragment : BaseFragment() {
     val currDOB    : Subject<Date> = PublishSubject.create<Date>()
     val lastDOB    : Subject<Date> = PublishSubject.create<Date>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val now       = Date()
+        val (y, m, d) = now.split()
+
+        datePicker  =  DatePickerDialog(context, {
+            v, y, m, d ->
+            currDOB.onNext(Triple(y, m, d).toDate())
+        }, y, m, d)
+
+        datePicker?.let {
+            it.datePicker.maxDate = now.time
+        }
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val x = dateTimeSheet
-        val sheet = dateTimeSheet as DateTimeBottomSheetDialogFragment
 
         // Open date picker on click event.
         dob.clicks()
-            .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-            .subscribe {
-                sheet.open(childFragmentManager)
-            }
+                .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe {
+                    datePicker?.let {
+                        if (!it.isShowing) it.show()
+                    }
+                }
 
         val now = Date()
 
         currDOB
-            .doOnNext {
-                dob.setText(it.formatMedium())
-            }
-            .withLatestFrom(lastDOB.startWith(now)) {
-                curr, last  -> Triple(curr, last, last == now)
-            }
-        .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-        .subscribe(this::onAge)
+                .doOnNext {
+                    dob.setText(it.formatMedium())
+                }
+                .withLatestFrom(lastDOB.startWith(now)) {
+                    curr, last  -> Triple(curr, last, last == now)
+                }
+                .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(this::onAge)
     }
 
     fun onAge(dobs: Triple<Date, Date, Boolean>) {
