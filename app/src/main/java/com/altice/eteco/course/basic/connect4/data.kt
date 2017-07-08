@@ -58,9 +58,9 @@ object Game {
     fun check(t: Turn, board: List<Bucket>) : Boolean {
 
         var win = checkVH(t, board, vertical  , { it.y }, { it.x }) ||
-                checkVH(t, board, horizontal, { it.x }, { it.y }) ||
-                checkDA(t, board) ||
-                checkDD(t, board)
+                  checkVH(t, board, horizontal, { it.x }, { it.y }) ||
+                  checkDA(t, board) ||
+                  checkDD(t, board)
 
         return win
     }
@@ -74,7 +74,8 @@ object Game {
             val xs = it.value.map { map(it) }.sorted()
 
             val match = orientation.any { w ->
-                xs.all { x -> w.contains(x) }
+                w.all { x -> xs.contains(x) }
+               // xs.all { x -> w.contains(x) }
             }
             val match2 = it.value.count { it.turn == t } >= 4
             match && match2
