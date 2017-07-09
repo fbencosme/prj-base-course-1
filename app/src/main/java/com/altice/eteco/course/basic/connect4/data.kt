@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 
 import com.altice.eteco.course.basic.R
+import com.pawegio.kandroid.loadAnimation
 
 enum class Turn {
     Red, Yellow, Black
@@ -175,6 +176,9 @@ object Game {
 
 }
 
-fun TextView.bump(n: Int = 1) {
-    this.text = ("${this.text}".toInt() + n).toString()
-}
+fun TextView.bump(n: Int = 1) =
+    with(context.loadAnimation(R.anim.abc_fade_in)) {
+        duration = 3000
+        startAnimation(this)
+        text = ("$text".toInt() + n).toString()
+    }

@@ -18,6 +18,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.Observable.merge
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.subjects.Subject
 
 import kotlinx.android.synthetic.main.connect_four_fragment.*
 import java.util.concurrent.TimeUnit
@@ -27,9 +28,9 @@ class Connect4Fragment : BaseFragment() {
     override val layoutRes: Int = R.layout.connect_four_fragment
     override val titleRes : Int = R.string.conn4_title
 
-    val board = PublishSubject.create<List<Bucket>>()
-    val turn  = BehaviorSubject.createDefault(Turn.Red)
-    val wins  = PublishSubject.create<Turn>()
+    val board : Subject<List<Bucket>> = PublishSubject.create<List<Bucket>>()
+    val turn  : Subject<Turn>         = BehaviorSubject.createDefault(Turn.Red)
+    val wins  : Subject<Turn>         = PublishSubject.create<Turn>()
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,9 +40,9 @@ class Connect4Fragment : BaseFragment() {
         // Collect chips.
         val chips = grid.views.map {
 
-            val tag = it.tag.toString()
-            val column   = "${tag.first()}".toInt()
-            val row   = "${tag.last()}".toInt()
+            val tag    = it.tag.toString()
+            val row    = "${tag.first()}".toInt()
+            val column  = "${tag.last()}".toInt()
 
             Chip(views.indexOf(it), it, column, row)
         }
@@ -55,20 +56,20 @@ class Connect4Fragment : BaseFragment() {
                     it.alpha      = .4f
                 }
 
-                // Increase counter
+                // Increase Score counter
                 when (w)  {
 
                     Turn.Red    -> {
                         red.bump()
                         R.raw.applause.play(context) {
-                            doReset(views)
+                            doReset(views, w)
                         }
                     }
 
                     Turn.Yellow -> {
                         yellow.bump()
                         R.raw.applause.play(context) {
-                            doReset(views)
+                            doReset(views, w)
                         }
                     }
 
@@ -125,10 +126,13 @@ class Connect4Fragment : BaseFragment() {
 
                     turn.onNext(t.flip())
 
+                    // Check for a winner.ß
                     val tmp = b + pair.second
 
                     if (Game.check(t, tmp))
                         wins.onNext(t)
+
+                    // Reset if there's no more room.ß
                     else if (tmp.size == 42)
                         wins.onNext(Turn.Black)
                 }
@@ -143,7 +147,7 @@ class Connect4Fragment : BaseFragment() {
             }
     }
 
-    fun doReset(views: List<View>) {
+    fun doReset(views: List<View>, t: Turn = Turn.Black) {
         val bg = Turn.Black.drawable(context)
         views.forEach {
             it.background = bg
@@ -151,7 +155,7 @@ class Connect4Fragment : BaseFragment() {
             it.alpha      = 1f
         }
         board.onNext(emptyList())
-        turn.onNext(Turn.Red)
+        turn.onNext(t)
     }
 
 }

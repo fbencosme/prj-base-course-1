@@ -11,6 +11,7 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
+       style="@style/Widget.AppCompat.Button.Borderless"
        android:text="@string/conn4.players"/>
     <TextView
         android:id="@+id/red"
