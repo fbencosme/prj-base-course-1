@@ -2,6 +2,7 @@ package com.altice.eteco.course.basic
 
 import java.util.concurrent.TimeUnit
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -25,6 +26,8 @@ class MainActivity : RxAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContentView(R.layout.main_activity)
         setSupportActionBar(toolbar)
