@@ -6,8 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.altice.eteco.course.basic.simonSays.SimonSaysFragment" >
+    <TextView
+        android:background="@android:color/black"
+        android:id="@+id/autoOn"
+        android:textColor="@color/colorAccent"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="@string/simon.says.autoOn"/>
 
     <RelativeLayout
+        android:layout_below="@+id/autoOn"
         android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

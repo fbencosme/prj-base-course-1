@@ -89,6 +89,7 @@
     <string name="simon.says.focus">Be Focus!</string>
     <string name="simon.says.play">Play!</string>
     <string name="simon.says.excellent">Excellent!</string>
+    <string name="simon.says.autoOn">Auto On, please wait...</string>
 
     <string name="conn4.title">Connect 4</string>
     <string name="conn4.turn">Turn</string>
