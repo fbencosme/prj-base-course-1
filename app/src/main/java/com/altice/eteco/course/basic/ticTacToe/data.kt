@@ -54,7 +54,7 @@ object TicTacToe {
 
         val crosses = moves.filter { it.symbol == Symbol.Cross  }.map { it.position }
         val noughts = moves.filter { it.symbol == Symbol.Nought }.map { it.position }
-        
+
         val noughtCanWin = wins.find { w ->
             val found = noughts.count  { w.contains(it) }
             found > 1 && crosses.count { w.contains(it) } == 0
