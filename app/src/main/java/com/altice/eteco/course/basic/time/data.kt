@@ -8,13 +8,11 @@ import org.joda.time.DateTime
 import org.joda.time.Period
 import org.joda.time.format.PeriodFormatterBuilder
 
-import java.util.*
-
 enum class TimeSource {
     From, To, Now
 }
 
-fun Pair<Date, Date>.period(ctx: Context) : String {
+fun Pair<DateTime, DateTime>.period(ctx: Context) : String {
     val (from, to) = this
 
     fun res(r: Int) = ctx.getString(r)
@@ -53,8 +51,8 @@ fun Pair<Date, Date>.period(ctx: Context) : String {
 
         .toFormatter()
 
-    val start = if (from < to) DateTime(from) else DateTime(to)
-    val end   = if (from < to) DateTime(to)   else DateTime(from)
+    val start = if (from < to) from else to
+    val end   = if (from < to) to   else from
 
     return Period(start, end).toString(formatter)
 }

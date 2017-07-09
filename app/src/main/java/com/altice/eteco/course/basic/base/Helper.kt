@@ -1,5 +1,6 @@
 package com.altice.eteco.course.basic.base
 
+import org.joda.time.DateTime
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,5 +49,12 @@ fun Triple<Int, Int, Int>.toDate() : Date {
     cal.set(first, second, third, 0, 0);
     return cal.time
 }
+
+fun Triple<Int, Int, Int>.toDateTime() : DateTime =
+    DateTime(first, second, third, 0, 0, 0)
+
+fun Pair<Int, Int>.toDateTime() : DateTime =
+    DateTime.now().withHourOfDay(first).withMinuteOfHour(second)
+
 
 fun CharSequence.toDouble() = "$this".toDoubleOrNull() ?: 0.toDouble()

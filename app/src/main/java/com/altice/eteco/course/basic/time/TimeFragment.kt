@@ -14,9 +14,6 @@ import com.jakewharton.rxbinding2.view.clicks
 
 import com.trello.rxlifecycle2.android.FragmentEvent
 
-import io.reactivex.functions.Action
-import io.reactivex.Observable.merge
-import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 
 import io.reactivex.rxkotlin.withLatestFrom
@@ -25,93 +22,45 @@ import io.reactivex.subjects.BehaviorSubject
 
 import kotlinx.android.synthetic.main.time_fragment.*
 
+import org.joda.time.DateTime
+
 class TimeFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.time_fragment
     override val titleRes : Int = R.string.time_title
 
-    var datePicker : DatePickerDialog?   = null
-    val dateChosen : Subject<Date>       = PublishSubject .create<Date>()
-    val toDate     : Subject<Date>       = BehaviorSubject.createDefault<Date>(Date())
-    val fromDate   : Subject<Date>       = BehaviorSubject.createDefault<Date>(Date())
-    val toSource   : Subject<TimeSource> = PublishSubject .create<TimeSource>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val now       = Date()
-        val (y, m, d) = now.split()
-
-        datePicker  =  DatePickerDialog(context, {
-            _, y, m, d ->
-            dateChosen.onNext(Triple(y, m, d).toDate())
-        }, y, m, d)
-    }
+    val toDate     : Subject<DateTime>   = BehaviorSubject.createDefault<DateTime>(DateTime())
+    val fromDate   : Subject<DateTime>   = BehaviorSubject.createDefault<DateTime>(DateTime())
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Stream flow.
-        merge(
+        combineLatest(
 
-            // Push stream from selected date to his owner.
-            dateChosen.withLatestFrom(toSource) {
-                date, src -> Pair(date, src)
-            }
-            .map {
-                (date, src) ->
-                Action {
-                    when (src) {
-                        TimeSource.From -> fromDate.onNext(date)
-                        TimeSource.To   -> toDate  .onNext(date)
-                        else            -> {}
-                    }
-                }
+            // From click event.
+            from.clicks()
+                .withLatestFrom(fromDate) { _, date -> date }
+                .switchMap {
+                    DateTimeDialog.open(childFragmentManager, it)
+                }.doOnNext {
+                  from.setText(it.toDate().formatCustom())
             },
 
-            // Open date picker dialog stream.
-            merge(
-
-                // From click event.
-                from.clicks()
-                    .map { TimeSource.From }
-                    .doOnNext { toSource.onNext(it) }
-                    .withLatestFrom(fromDate) { _, d -> d },
-
-                // To click event
-                to  .clicks()
-                    .map { TimeSource.To }
-                    .doOnNext { toSource.onNext(it) }
-                    .withLatestFrom(toDate  ) { _, d -> d })
-            .map {
-                Action {
-                    val (y, m, d) = it.split()
-                    datePicker?.let {
-                        it.datePicker.updateDate(y, m, d)
-                        it.show()
-                    }
-                }
-             },
-
-            // Calc period of time stream.
-            combineLatest(
-                fromDate.skip(1).doOnNext {
-                    from.setText(it.formatCustom())
-                },
-                toDate.skip(1).doOnNext {
-                    to.setText(it.formatCustom())
-                },
-                { from, to -> Pair(from, to) })
-            .map { it.period(context) }
-            .map {
-                Action {
-                    diff.text = it
-                }
+            // To click event.
+            to.clicks()
+              .withLatestFrom(toDate  ) { _, d -> d }
+              .switchMap {
+                  DateTimeDialog.open(childFragmentManager, it)
+              }.doOnNext {
+                  to.setText(it.toDate().formatCustom())
             }
         )
+        { from, to -> Pair(from, to) }
+        .map { it.period(context) }
         .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
         .subscribe {
-            it.run()
+            diff.text = it
         }
     }
 }
