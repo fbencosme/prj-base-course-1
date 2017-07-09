@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding2.view.clicks
 
 import com.pawegio.kandroid.alert
 import com.pawegio.kandroid.loadAnimation
+import com.pawegio.kandroid.runDelayedOnUiThread
 
 import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.Observable
@@ -67,7 +68,7 @@ class TicTacToeFragment : BaseFragment() {
                 tv.clicks().map { Pair(position, tv) }
         }
         .merge()
-        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .throttleFirst(600, TimeUnit.MILLISECONDS)
         .map {
             (tv, p) -> Triple(Player.P1, tv, p)
         }
@@ -75,20 +76,22 @@ class TicTacToeFragment : BaseFragment() {
         // Marker.
         val pcPlayer =
             pc.withLatestFrom(moves) { _, ms -> ms}
-              .filter { it.size < 8 }
+              .filter {
+                  it.size <= 8
+              }
               .map {
-                  val p  = TicTacToe.nextRandomPCMove(it)
+                  val p  = TicTacToe.nextPCMove(it)
                   val (_, tv) = buttons[p]
                   Triple(Player.PC, p, tv)
               }
-              .delay(300, TimeUnit.MILLISECONDS)
+              .delay(500, TimeUnit.MILLISECONDS)
 
         val marker = merge(player, pcPlayer)
             .withLatestFrom(moves.startWith(emptyList<Move>())) {
                 (player, position, tv), moves -> Gamble(player, position, tv, moves)
          }
         .filter {
-            g -> !g.moves.any { it.position == g.position }
+            g ->!g.moves.any { it.position == g.position }
         }
         .map {
             Pair(it.player, TicTacToe.nextMove(it))
@@ -98,12 +101,11 @@ class TicTacToeFragment : BaseFragment() {
                 var ms = m.first + m.second
                 moves.onNext(ms)
         }
-        .doOnNext {
-            if (it.first == Player.P1)
-                pc.onNext(Unit.apply {  })
-        }
         .map {
-            (_, m) -> { ->
+            (player, m) -> { ->
+               if (player == Player.P1)
+                 pc.onNext(Unit.apply { })
+
                 when (m.second.symbol) {
                     Symbol.Cross  -> m.third.text = "X"
                     Symbol.Nought -> m.third.text = "O"
@@ -138,12 +140,12 @@ class TicTacToeFragment : BaseFragment() {
             .filter { (_ , s) -> s == f }
             .map {
                 (reset, s) -> { ->
-                val n = if (reset) 0 else "${tv.text}".toIntOrNull() ?: 0 + 1
-                tv.text =  "$n"
+                val n = if (reset) 0 else "${tv.text}".toIntOrNull() ?: 0
+                tv.text =  "${n+1}"
             }
     }
 
-    fun checkMove(s: MoveState, winner: Array<Int>, moves: List<Move>) {
+    fun checkMove(s: MoveState, winner: List<Int>, moves: List<Move>) {
         when (s) {
             MoveState.Next   -> onNext()
             MoveState.Tie    -> onTie()
@@ -155,14 +157,20 @@ class TicTacToeFragment : BaseFragment() {
         onAlert(getString(R.string.tic_tac_toe_tie))
 
     fun onAlert(msg: String) =
-        context.alert {
-            title(msg)
-            onCancel {
-                doReset()
-            }
-        }.show()
+       with(context.alert {
+           title(msg)
+           cancellable(false)
+        }) {
+           show()
+           runDelayedOnUiThread(1000, {
+               if (this.dialog?.isShowing ?: false) {
+                   dismiss()
+                   doReset()
+               }
+           })
+       }
 
-    fun onWin(poss: Array<Int>, move: Move) {
+    fun onWin(poss: List<Int>, move: Move) {
 
         // Fill moves
         moves.onNext((0..8).map { Move(Symbol.None, it) })
