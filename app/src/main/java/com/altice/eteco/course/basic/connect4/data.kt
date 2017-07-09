@@ -13,16 +13,16 @@ enum class Turn {
 }
 
 data class Chip(
-    val id  : Int,
-    val view: View,
-    val x   : Int,
-    val y   : Int
+    val id    : Int,
+    val view  : View,
+    val column: Int,
+    val row   : Int
 )
 
 data class Bucket(
-    val x    : Int,
-    val y    : Int,
-    val turn : Turn
+    val column: Int,
+    val row   : Int,
+    val turn  : Turn
 )
 
 fun Turn.flip() : Turn = when(this) {
@@ -45,52 +45,93 @@ fun Turn.drawable(ctx: Context) : Drawable {
 object Game {
 
     fun findBucket(t: Turn, c: Chip, board: List<Bucket>) : Bucket {
-        val ys = board.filter { it.y == c.y  }
-        val b  = ys.sortedBy { it.x }.lastOrNull()
+        val rows   = board.filter  { it.column == c.column }
+        val bucket = rows.sortedBy { it.row }.lastOrNull()
 
-        if (b == null)
-            return Bucket(5, c.y, t)
+        return if (bucket == null)
+            Bucket(
+                row    = 5,
+                column = c.column,
+                turn   = t)
         else
-            return Bucket(5 - ys.size, c.y, t)
-
+            Bucket(
+                row    = 5 - rows.size,
+                column = c.column, turn = t)
     }
 
     fun check(t: Turn, board: List<Bucket>) : Boolean {
 
-        var win = checkVH(t, board, vertical  , { it.y }, { it.x }) ||
-                  checkVH(t, board, horizontal, { it.x }, { it.y }) ||
+        var win = checkV(t, board)  ||
+                  checkH(t, board)  ||
                   checkDA(t, board) ||
                   checkDD(t, board)
 
         return win
     }
 
-    fun checkVH(t: Turn, board: List<Bucket>, orientation: List<IntRange>, group: (Bucket) -> Int, map : (Bucket) -> Int) : Boolean =
-        board
-            .groupBy { group(it) }
-            .filter { it.value.size >= 4 }
-            .any {
+    // Check Horizontal
+    fun checkH(t: Turn, board: List<Bucket>) :  Boolean {
+        var res = false
 
-            val xs = it.value.map { map(it) }.sorted()
+        for (row in 0..3) {
+            for (column in 0..6) {
 
-            val match = orientation.any { w ->
-                w.all { x -> xs.contains(x) }
-               // xs.all { x -> w.contains(x) }
+                val a = board.find { it.row == column && it.column == row   }
+                val b = board.find { it.row == column && it.column == row+1 }
+                val c = board.find { it.row == column && it.column == row+2 }
+                val d = board.find { it.row == column && it.column == row+3 }
+
+                if (a?.turn?.equals(t) ?: false &&
+                    b?.turn?.equals(t) ?: false &&
+                    c?.turn?.equals(t) ?: false &&
+                    d?.turn?.equals(t) ?: false)
+                {
+                    res = true
+                    return res
+                }
             }
-            val match2 = it.value.count { it.turn == t } >= 4
-            match && match2
         }
 
+        return res
+    }
+
+    // Check Vertical
+    fun checkV(t: Turn, board: List<Bucket>) :  Boolean {
+        var res = false
+
+        for (column in 0..3) {
+            for (row in 0..6) {
+
+                val a = board.find { it.row == column   && it.column == row }
+                val b = board.find { it.row == column+1 && it.column == row }
+                val c = board.find { it.row == column+2 && it.column == row }
+                val d = board.find { it.row == column+3 && it.column == row }
+
+                if (a?.turn?.equals(t) ?: false &&
+                        b?.turn?.equals(t) ?: false &&
+                        c?.turn?.equals(t) ?: false &&
+                        d?.turn?.equals(t) ?: false)
+                {
+                    res = true
+                    return res
+                }
+            }
+        }
+
+        return res
+    }
+
+    // Check Diagonal up
     fun checkDA(t: Turn, board: List<Bucket>) :  Boolean {
         var res = false
 
-        for (x in 3..6) {
-            for (y in 0..2) {
+        for (column in 3..6) {
+            for (row in 0..2) {
 
-                val a = board.find { it.x == x   && it.y == y   }
-                val b = board.find { it.x == x-1 && it.y == y+1 }
-                val c = board.find { it.x == x-2 && it.y == y+2 }
-                val d = board.find { it.x == x-3 && it.y == y+3 }
+                val a = board.find { it.row == column   && it.column == row   }
+                val b = board.find { it.row == column-1 && it.column == row+1 }
+                val c = board.find { it.row == column-2 && it.column == row+2 }
+                val d = board.find { it.row == column-3 && it.column == row+3 }
 
                 if (a?.turn?.equals(t) ?: false &&
                     b?.turn?.equals(t) ?: false &&
@@ -106,16 +147,17 @@ object Game {
         return res
     }
 
+    // Check Diagonal down
     fun checkDD(t: Turn, board: List<Bucket>) :  Boolean {
         var res = false
 
-        for (x in 3..6) {
-            for (y in 0..5) {
+        for (column in 3..6) {
+            for (row in 0..5) {
 
-                var a = board.find { it.x == x   && it.y == y   }
-                var b = board.find { it.x == x-1 && it.y == y-1 }
-                var c = board.find { it.x == x-2 && it.y == y-2 }
-                var d = board.find { it.x == x-3 && it.y == y-3 }
+                var a = board.find { it.row == column   && it.column == row   }
+                var b = board.find { it.row == column-1 && it.column == row-1 }
+                var c = board.find { it.row == column-2 && it.column == row-2 }
+                var d = board.find { it.row == column-3 && it.column == row-3 }
 
                 if (a?.turn?.equals(t) ?: false &&
                     b?.turn?.equals(t) ?: false &&
@@ -131,8 +173,6 @@ object Game {
         return res
     }
 
-    val horizontal = listOf(0..3, 1..4, 2..5, 3..6)
-    val vertical   = listOf(0..3, 1..4, 2..5)
 }
 
 fun TextView.bump(n: Int = 1) {

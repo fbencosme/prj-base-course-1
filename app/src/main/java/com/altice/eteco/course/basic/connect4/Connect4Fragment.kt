@@ -35,22 +35,27 @@ class Connect4Fragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val views = grid.views
-
+        
+        // Collect chips.
         val chips = grid.views.map {
 
             val tag = it.tag.toString()
-            val x   = "${tag.first()}".toInt()
-            val y   = "${tag.last()}".toInt()
+            val column   = "${tag.first()}".toInt()
+            val row   = "${tag.last()}".toInt()
 
-            Chip(views.indexOf(it), it, x, y)
+            Chip(views.indexOf(it), it, column, row)
         }
 
+        // Winner stream.
         val winner = wins.map { w ->
             { ->
+                // Disabling all chips
                 views.forEach {
                     it.isEnabled  = false
                     it.alpha      = .4f
                 }
+
+                // Increase counter
                 when (w)  {
 
                     Turn.Red    -> {
@@ -67,39 +72,45 @@ class Connect4Fragment : BaseFragment() {
                         }
                     }
 
+                    // Reset when is black,
                     Turn.Black -> doReset(views)
                 }
-        } }
+            }
+        }
 
+        // Restart stream.
         val restart = reset.clicks().map { _ ->
             {
                 doReset(views)
             }
         }
 
+        // Player turn stream.
         val game =
             chips.map { chip ->
                 chip.view.clicks().map { chip }
             }
             .merge()
-            .throttleFirst(300, TimeUnit.MILLISECONDS)
+            .throttleFirst(400, TimeUnit.MILLISECONDS)
             .withLatestFrom(board.startWith(emptyList<Bucket>())) {
                 chip, board -> Pair(chip, board)
             }.withLatestFrom(
-                turn.doOnNext { onTurn.background = it.drawable(context) }
+                turn.doOnNext {
+                    onTurn.background = it.drawable(context)
+                }
             ) {
                 (chip, board), t -> Triple(chip, board, t)
             }
             .map {
                 (chip, board, turn) ->
                     val bucket  = Game.findBucket(turn, chip, board)
-                    val newChip = chips.find { it.x == bucket.x && it.y == bucket.y }
+                    val newChip = chips.find { it.row == bucket.row && it.column == bucket.column }
                     Triple(Pair(newChip, bucket), board, turn)
             }
             .filter {
                 (pair, board, _) ->
                     val chip = pair.first
-                    board.isEmpty() || board.none { it.x == chip?.x && it.y == chip.y }
+                    board.isEmpty() || board.none { it.row == chip?.row && it.column == chip.column }
             }
             .doOnNext {
                 (pair, bucket, _) ->
