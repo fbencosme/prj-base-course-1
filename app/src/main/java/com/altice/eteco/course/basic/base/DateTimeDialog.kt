@@ -28,7 +28,7 @@ import org.joda.time.DateTime
 
 class CustomDatePicker(ctx: Context, attrs: AttributeSet) : DatePicker(ctx, attrs) {
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        if (event?.actionMasked == MotionEvent.ACTION_DOWN && )
+        if (event?.actionMasked == MotionEvent.ACTION_DOWN)
             parent?.parent?.let { it.requestDisallowInterceptTouchEvent(true) }
         return false
     }
