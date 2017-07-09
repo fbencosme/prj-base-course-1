@@ -126,13 +126,13 @@ class Connect4Fragment : BaseFragment() {
 
                     turn.onNext(t.flip())
 
-                    // Check for a winner.ß
+                    // Check for a winner.
                     val tmp = b + pair.second
 
-                    if (Game.check(t, tmp))
+                    if (Game.checkWins(t, tmp))
                         wins.onNext(t)
 
-                    // Reset if there's no more room.ß
+                    // Reset if there's no more room.
                     else if (tmp.size == 42)
                         wins.onNext(Turn.Black)
                 }
