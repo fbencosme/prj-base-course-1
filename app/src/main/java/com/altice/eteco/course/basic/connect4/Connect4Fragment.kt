@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding2.view.clicks
 
 import com.pawegio.kandroid.views
 import com.trello.rxlifecycle2.android.FragmentEvent
+import io.reactivex.Observable
 
 import io.reactivex.rxkotlin.merge
 import io.reactivex.rxkotlin.withLatestFrom
@@ -38,122 +39,135 @@ class Connect4Fragment : BaseFragment() {
         val views = grid.views
         
         // Collect chips.
-        val chips = grid.views.map {
-
-            val tag    = it.tag.toString()
-            val row    = "${tag.first()}".toInt()
-            val column  = "${tag.last()}".toInt()
-
-            Chip(views.indexOf(it), it, column, row)
-        }
+        val chips = createChips(views)
 
         // Winner stream.
-        val winner = wins.map { w ->
-            { ->
-                // Disabling all chips
-                views.forEach {
-                    it.isEnabled  = false
-                    it.alpha      = .4f
-                }
-
-                // Increase Score counter
-                when (w)  {
-
-                    Turn.Red    -> {
-                        red.bump()
-                        R.raw.applause.play(context) {
-                            doReset(views, w)
-                        }
-                    }
-
-                    Turn.Yellow -> {
-                        yellow.bump()
-                        R.raw.applause.play(context) {
-                            doReset(views, w)
-                        }
-                    }
-
-                    // Reset when is black,
-                    Turn.Black -> doReset(views)
-                }
-            }
-        }
+        val winner = winnerStream(views)
 
         // Restart stream.
-        val restart = reset.clicks().map { _ ->
-            {
-                doReset(views)
-            }
-        }
+        val restart = restartStream(views)
 
         // Player turn stream.
-        val game =
-            chips.map { chip ->
-                chip.view.clicks().map { chip }
-            }
-            .merge()
-            .throttleFirst(400, TimeUnit.MILLISECONDS)
-            .withLatestFrom(board.startWith(emptyList<Bucket>())) {
-                chip, board -> Pair(chip, board)
-            }.withLatestFrom(
-                turn.doOnNext {
-                    onTurn.background = it.drawable(context)
-                }
-            ) {
-                (chip, board), t -> Triple(chip, board, t)
-            }
-            .map {
-                (chip, board, turn) ->
-                    val bucket  = Game.findBucket(turn, chip, board)
-                    val newChip = chips.find { it.row == bucket.row && it.column == bucket.column }
-                    Triple(Pair(newChip, bucket), board, turn)
-            }
-            .filter {
-                (pair, board, _) ->
-                    val chip = pair.first
-                    board.isEmpty() || board.none { it.row == chip?.row && it.column == chip.column }
-            }
-            .doOnNext {
-                (pair, bucket, _) ->
-                    val newBucket = pair.second
-                    board.onNext(bucket + newBucket)
-            }
-            .map { (pair, b, t) -> {
-                ->
-                    pair.first?.let {
-                        it.view.background = t.drawable(context)
-                    }
-
-                    turn.onNext(t.flip())
-
-                    // Check for a winner.
-                    val tmp = b + pair.second
-
-                    if (Game.checkWins(t, tmp))
-                        wins.onNext(t)
-
-                    // Reset if there's no more room.
-                    else if (tmp.size == 42)
-                        wins.onNext(Turn.Black)
-                }
-            }
+        val turnPlay = playTurnStream(chips)
 
         // Game flow.
-        merge(game, restart, winner)
-            .observeOn(AndroidSchedulers.mainThread())
+        val game = merge(turnPlay, restart, winner)
+
+        // Start game
+        game.observeOn(AndroidSchedulers.mainThread())
             .compose(bindUntilEvent(FragmentEvent.DESTROY_VIEW))
             .subscribe {
                 it?.invoke()
             }
     }
 
+    fun createChips(views: List<View>): List<Chip> =
+         grid.views.map {
+
+            val tag = it.tag.toString()
+            val row = "${tag.first()}".toInt()
+            val column = "${tag.last()}".toInt()
+
+            Chip(views.indexOf(it), it, column, row)
+        }
+
+    fun playTurnStream(chips: List<Chip>): Observable<() -> Unit>? =
+        chips.map { chip ->
+            chip.view.clicks().map { chip }
+        }
+        .merge()
+        .throttleFirst(300, TimeUnit.MILLISECONDS)
+        .withLatestFrom(board.startWith(emptyList<Bucket>())) {
+            chip, board ->
+            Pair(chip, board)
+        }
+        .withLatestFrom(
+            turn.doOnNext {
+                onTurn.background = it.drawable(context)
+            }
+        ) {
+            (chip, board), t ->
+            Triple(chip, board, t)
+        }
+        .map {
+            (chip, board, turn) ->
+            val bucket = Game.findBucket(turn, chip, board)
+            val newChip = chips.find { it.row == bucket.row && it.column == bucket.column }
+            Triple(Pair(newChip, bucket), board, turn)
+        }
+        .filter {
+            (pair, board, _) ->
+            val chip = pair.first
+            board.isEmpty() || board.none { it.row == chip?.row && it.column == chip.column }
+        }
+        .doOnNext {
+            (pair, bucket, _) ->
+            val newBucket = pair.second
+            board.onNext(bucket + newBucket)
+        }
+        .map { (pair, b, t) -> { ->
+            pair.first?.let {
+                it.view.background = t.drawable(context)
+            }
+
+            turn.onNext(t.flip())
+
+            // Check for a winner.
+            val tmp = b + pair.second
+
+            if (Game.checkWins(t, tmp))
+                wins.onNext(t)
+
+            // Reset if there's no more room.
+            else if (tmp.size == 42)
+                wins.onNext(Turn.Black)
+        }
+    }
+
+    fun restartStream(views: List<View>): Observable<() -> Unit>? =
+         reset.clicks().map { _ -> {  doReset(views) } }
+
+    fun winnerStream(views: List<View>): Observable<() -> Unit>? =
+        wins.map { w -> { ->
+
+            // Disabling all chips
+            views.forEach {
+                it.isEnabled = false
+                it.alpha = .4f
+            }
+
+            // Increase Score counter
+            when (w) {
+
+                Turn.Red -> {
+                    red.bump()
+                    R.raw.applause.play(context) {
+                        doReset(views, w)
+                    }
+                }
+
+                Turn.Yellow -> {
+                    yellow.bump()
+                    R.raw.applause.play(context) {
+                        doReset(views, w)
+                    }
+                }
+
+                // Reset when is black,
+                Turn.Black -> doReset(views)
+            }
+        }
+    }
+
     fun doReset(views: List<View>, t: Turn = Turn.Black) {
         val bg = Turn.Black.drawable(context)
+
         views.forEach {
             it.background = bg
             it.isEnabled  = true
             it.alpha      = 1f
         }
+
         board.onNext(emptyList())
         turn.onNext(t)
     }
