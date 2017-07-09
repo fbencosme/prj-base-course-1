@@ -93,6 +93,7 @@
     <string name="conn4.title">Connect 4</string>
     <string name="conn4.turn">Turn</string>
     <string name="conn4.reset">Reset</string>
+    <string name="conn4.players">2 players</string>
 
     <string name="rpn.title">RPN Calculator</string>
     <string name="weight.title">Weight Calculator</string>

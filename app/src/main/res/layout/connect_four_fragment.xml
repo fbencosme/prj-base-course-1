@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.altice.eteco.course.basic.magic8Ball.Magic8BallFragment">
-
+   <TextView
+       android:layout_above="@+id/reset"
+       android:layout_marginBottom="20dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:text="@string/conn4.players"/>
     <TextView
         android:id="@+id/red"
         android:text="0"
