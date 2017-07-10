@@ -125,7 +125,7 @@ class Connect4Fragment : BaseFragment() {
     }
 
     fun restartStream(views: List<View>): Observable<() -> Unit>? =
-         reset.clicks().map { _ -> {  doReset(views) } }
+         reset.clicks().map { _ -> {  doReset(views, Turn.Red) } }
 
     fun winnerStream(views: List<View>): Observable<() -> Unit>? =
         wins.map { w -> { ->
@@ -154,12 +154,12 @@ class Connect4Fragment : BaseFragment() {
                 }
 
                 // Reset when is black,
-                Turn.Black -> doReset(views)
+                Turn.Black -> doReset(views, Turn.Red)
             }
         }
     }
 
-    fun doReset(views: List<View>, t: Turn = Turn.Black) {
+    fun doReset(views: List<View>, t: Turn) {
         val bg = Turn.Black.drawable(context)
 
         views.forEach {
